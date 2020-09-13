@@ -1,9 +1,6 @@
 package com.buzzardsview.readitcheck.model;
 
-import javax.persistence.Entity;
-import javax.persistence.NamedAttributeNode;
-import javax.persistence.NamedEntityGraph;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -24,6 +21,8 @@ public class User {
     private List<Comment> comments;
     @OneToMany(mappedBy = "user")
     private List<Submission> submissions;
+    @ManyToMany
+    private List<Submission> submissionsApprovedOn;
 
     public User(long googleId, String name) {
         this.googleId = googleId;
@@ -51,6 +50,10 @@ public class User {
         this.username = username;
     }
 
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
     public List<Comment> getComments() {
         return comments;
     }
@@ -63,7 +66,23 @@ public class User {
         return submissions;
     }
 
+    public void setSubmissions(List<Submission> submissions) {
+        this.submissions = submissions;
+    }
+
     public void addSubmission(Submission submission) {
         this.submissions.add(submission);
+    }
+
+    public List<Submission> getSubmissionsApprovedOn() {
+        return submissionsApprovedOn;
+    }
+
+    public void setSubmissionsApprovedOn(List<Submission> submissionsApprovedOn) {
+        this.submissionsApprovedOn = submissionsApprovedOn;
+    }
+
+    public void addSubmissionApprovedOn(Submission submission) {
+        this.submissionsApprovedOn.add(submission);
     }
 }

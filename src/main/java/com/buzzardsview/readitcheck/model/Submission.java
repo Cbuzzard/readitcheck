@@ -19,6 +19,8 @@ public class Submission extends Content {
     private List<Comment> comments;
     @OneToMany(mappedBy = "submission")
     private List<Question> questions;
+    @ManyToMany(mappedBy = "submissionsApprovedOn")
+    private List<User> approvedUsers;
 
     public Submission(User user, String title, String link, List<Question> questions) {
         super(user);
@@ -57,11 +59,27 @@ public class Submission extends Content {
         this.comments = comments;
     }
 
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
+    }
+
     public List<Question> getQuestions() {
         return questions;
     }
 
     public void setQuestions(List<Question> questions) {
         this.questions = questions;
+    }
+
+    public List<User> getApprovedUsers() {
+        return approvedUsers;
+    }
+
+    public void setApprovedUsers(List<User> approvedUsers) {
+        this.approvedUsers = approvedUsers;
+    }
+
+    public void addApprovedUser(User user) {
+        this.approvedUsers.add(user);
     }
 }
