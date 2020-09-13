@@ -1,11 +1,11 @@
 package com.buzzardsview.readitcheck.model.dto;
 
-public class QuestionDto {
+public class QuestionPostDto {
 
     private String question;
     private String answer;
 
-    public QuestionDto(String question, String answer) {
+    public QuestionPostDto(String question, String answer) {
         this.question = question;
         this.answer = answer;
     }

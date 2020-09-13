@@ -1,11 +1,13 @@
 package com.buzzardsview.readitcheck.model.dto;
 
-public class CommentDto {
+public class CommentPostDto {
+
+    //TODO maybe remove submissionId since it will be url param
 
     private String content;
     private int submissionId;
 
-    public CommentDto(String content, int submissionId) {
+    public CommentPostDto(String content, int submissionId) {
         this.content = content;
         this.submissionId = submissionId;
     }

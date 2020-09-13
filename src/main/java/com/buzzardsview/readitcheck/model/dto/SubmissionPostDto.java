@@ -2,13 +2,13 @@ package com.buzzardsview.readitcheck.model.dto;
 
 import java.util.List;
 
-public class SubmissionDto {
+public class SubmissionPostDto {
 
     private String title;
     private String link;
-    private List<QuestionDto> questions;
+    private List<QuestionPostDto> questions;
 
-    public SubmissionDto(String title, String link, List<QuestionDto> questions) {
+    public SubmissionPostDto(String title, String link, List<QuestionPostDto> questions) {
         this.title = title;
         this.link = link;
         this.questions = questions;
@@ -30,11 +30,11 @@ public class SubmissionDto {
         this.link = link;
     }
 
-    public List<QuestionDto> getQuestions() {
+    public List<QuestionPostDto> getQuestions() {
         return questions;
     }
 
-    public void setQuestions(List<QuestionDto> questions) {
+    public void setQuestions(List<QuestionPostDto> questions) {
         this.questions = questions;
     }
 }
