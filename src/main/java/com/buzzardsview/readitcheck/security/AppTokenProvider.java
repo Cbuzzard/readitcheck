@@ -1,5 +1,7 @@
 package com.buzzardsview.readitcheck.security;
 
+import com.buzzardsview.readitcheck.data.UserRepository;
+import com.buzzardsview.readitcheck.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -7,8 +9,11 @@ import io.jsonwebtoken.SignatureException;
 import java.time.Instant;
 import java.util.Date;
 import java.util.Optional;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -51,5 +56,11 @@ public class AppTokenProvider {
             }
         }
         return Optional.empty();
+    }
+
+    public static Long getCurrentUserId(ServletRequest servletRequest) {
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        Long userId = Long.parseLong((String) request.getAttribute("userId"));
+        return userId;
     }
 }
