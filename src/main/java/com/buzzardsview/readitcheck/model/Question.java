@@ -3,6 +3,7 @@ package com.buzzardsview.readitcheck.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Question {
@@ -12,6 +13,7 @@ public class Question {
     private int id;
     private String question;
     private String answer;
+    @ManyToOne
     private Submission submission;
 
     public Question(String question, String answer, Submission submission) {
@@ -53,5 +55,9 @@ public class Question {
 
     public void setSubmission(Submission submission) {
         this.submission = submission;
+    }
+
+    public boolean checkAnswer(String answer) {
+        return this.answer.toLowerCase().equals(answer.toLowerCase());
     }
 }
