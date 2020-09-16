@@ -14,7 +14,8 @@ import java.util.List;
 @Entity
 public class User {
 
-    private long googleId;
+    @Id
+    private final long googleId;
     private String name;
     private String username;
     @OneToMany(mappedBy = "user")
