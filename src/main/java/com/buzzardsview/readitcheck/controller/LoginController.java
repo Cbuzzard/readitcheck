@@ -3,6 +3,7 @@ package com.buzzardsview.readitcheck.controller;
 import com.buzzardsview.readitcheck.data.UserRepository;
 import com.buzzardsview.readitcheck.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,6 +17,7 @@ public class LoginController {
     @Autowired
     private UserRepository userRepository;
 
+    @GetMapping
     public void authenticate(ServletRequest servletRequest) {
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
