@@ -8,6 +8,8 @@ group = 'com.buzzardsview'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '14'
 
+processResources.enabled = false
+
 repositories {
 	mavenCentral()
 }
