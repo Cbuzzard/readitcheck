@@ -1,9 +1,6 @@
 package com.buzzardsview.readitcheck.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
 public class Question {
@@ -14,6 +11,7 @@ public class Question {
     private String question;
     private String answer;
     @ManyToOne
+    @JoinColumn(name = "submission_id")
     private Submission submission;
 
     public Question(String question, String answer, Submission submission) {

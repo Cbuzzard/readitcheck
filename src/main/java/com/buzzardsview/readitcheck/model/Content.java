@@ -1,17 +1,15 @@
 package com.buzzardsview.readitcheck.model;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
+@MappedSuperclass
 public abstract class Content {
 
     @Id
     @GeneratedValue
     private int id;
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "google_id")
     private User user;
     private long timestamp;
 

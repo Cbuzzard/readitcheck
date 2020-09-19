@@ -7,7 +7,7 @@ public class Comment extends Content {
 
     private String content;
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "submission_id")
     private Submission submission;
 
     public Comment(User user, String content, Submission submission) {
