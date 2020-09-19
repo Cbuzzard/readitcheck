@@ -19,7 +19,7 @@ public class GoogleTokenVerifier {
 
     private static final HttpTransport transport = new NetHttpTransport();
     private static final JsonFactory jsonFactory = new JacksonFactory();
-    private static final String CLIENT_ID = "428759163089-0un7vcmrckisnvpt06hqr6v1orbmmap0.apps.googleusercontent.com";
+    private static final String CLIENT_ID = "53814632760-ijc3h4mhjnj8gc1mpmha8t2tl8bg9b2v.apps.googleusercontent.com";
 
 
     public Payload verify(String idTokenString)
@@ -42,8 +42,7 @@ public class GoogleTokenVerifier {
         try {
             idToken = verifier.verify(idTokenString);
         } catch (IllegalArgumentException e){
-            // means token was not valid and idToken
-            // will be null
+
         }
 
         if (idToken == null) {
