@@ -1,37 +1,43 @@
 package com.buzzardsview.readitcheck.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @NamedEntityGraph(
         name = "user-entity-graph",
         attributeNodes = {
                 @NamedAttributeNode("comments"),
-                @NamedAttributeNode("submissions")
         }
 )
 @Entity
 public class User {
 
+    //TODO figure out named entity graphs
+
+
     @Id
-    private final long googleId;
+    @Size(max = 22)
+    private String googleId;
     private String name;
     private String username;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Comment> comments;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Submission> submissions;
     @ManyToMany
     private List<Submission> submissionsApprovedOn;
 
-    public User(long googleId, String name) {
+    public User(String googleId, String name) {
         this.googleId = googleId;
         this.name = name;
         this.username = name;
     }
 
-    public long getGoogleId() {
+    public User() {
+    }
+
+    public String getGoogleId() {
         return googleId;
     }
 

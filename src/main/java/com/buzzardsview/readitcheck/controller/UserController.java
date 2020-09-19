@@ -18,8 +18,8 @@ public class UserController {
     private UserRepository userRepository;
 
     @GetMapping("/{id}")
-    public User getOne(@PathVariable Integer id) {
-        return userRepository.getById(id).orElseThrow();
+    public User getOne(@PathVariable String id) {
+        return userRepository.getByGoogleId(id).orElseThrow();
     }
 
 }
