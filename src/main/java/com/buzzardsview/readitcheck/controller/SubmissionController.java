@@ -8,12 +8,10 @@ import com.buzzardsview.readitcheck.model.User;
 import com.buzzardsview.readitcheck.model.dto.QuestionPostDto;
 import com.buzzardsview.readitcheck.model.dto.SubmissionGetDto;
 import com.buzzardsview.readitcheck.model.dto.SubmissionPostDto;
-import com.buzzardsview.readitcheck.security.AppTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,10 +27,10 @@ public class SubmissionController {
     private UserRepository userRepository;
 
     @GetMapping("/{id}")
-    public SubmissionGetDto getOne(@PathVariable Integer id, ServletRequest servletRequest) {
+    public SubmissionGetDto getOne(@PathVariable Integer id, ServletRequest request) {
 
         Submission submission = submissionRepository.getById(id).orElseThrow();
-        User user = userRepository.findById(AppTokenProvider.getCurrentUserId(servletRequest)).orElseThrow();
+        User user = userRepository.findById((String) request.getAttribute("userId")).orElseThrow();
 
         boolean currentUserApproved = user == null ? false : submission.getApprovedUsers().contains(user);
 
@@ -49,9 +47,9 @@ public class SubmissionController {
     }
 
     @PostMapping
-    public void newSubmission(@RequestBody SubmissionPostDto submissionDto, ServletRequest servletRequest) {
+    public void newSubmission(@RequestBody SubmissionPostDto submissionDto, ServletRequest request) {
 
-        User user = userRepository.findById(AppTokenProvider.getCurrentUserId(servletRequest)).orElseThrow();
+        User user = userRepository.findById((String) request.getAttribute("userId")).orElseThrow();
         Submission newSubmission = new Submission(user, submissionDto.getTitle(), submissionDto.getLink());
 
         List<Question> questions = new ArrayList<>();

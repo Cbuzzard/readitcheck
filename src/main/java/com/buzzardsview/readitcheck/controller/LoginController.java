@@ -3,12 +3,10 @@ package com.buzzardsview.readitcheck.controller;
 import com.buzzardsview.readitcheck.data.UserRepository;
 import com.buzzardsview.readitcheck.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("login")
@@ -17,11 +15,10 @@ public class LoginController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping
-    public void authenticate(ServletRequest servletRequest) {
+    @PostMapping
+    public void authenticate(ServletRequest request) {
 
-        HttpServletRequest request = (HttpServletRequest) servletRequest;
-        Long userId = Long.parseLong((String) request.getAttribute("userId"));
+        String userId = (String) request.getAttribute("userId");
         String name = (String) request.getAttribute("name");
 
         if (!userRepository.findById(userId).isPresent()) {

@@ -8,7 +8,6 @@ import com.buzzardsview.readitcheck.model.Submission;
 import com.buzzardsview.readitcheck.model.User;
 import com.buzzardsview.readitcheck.model.dto.QuestionCheckDto;
 import com.buzzardsview.readitcheck.model.dto.SubmissionGetDto;
-import com.buzzardsview.readitcheck.security.AppTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,7 +29,7 @@ public class QuestionController {
 
     @GetMapping("{questionId}")
     public SubmissionGetDto checkAnswer(QuestionCheckDto questionCheckDto, @PathVariable Integer submissionId,
-                                        @PathVariable Integer questionId, ServletRequest servletRequest) {
+                                        @PathVariable Integer questionId, ServletRequest request) {
 
         Question question = questionRepository.findById(questionId).orElseThrow();
         Submission submission = submissionRepository.getById(submissionId).orElseThrow();
@@ -38,7 +37,7 @@ public class QuestionController {
         boolean answeredCorrectly = question.checkAnswer(questionCheckDto.getAnswer());
 
         if (answeredCorrectly) {
-            User user = userRepository.findById(AppTokenProvider.getCurrentUserId(servletRequest)).orElseThrow();
+            User user = userRepository.findById((String) request.getAttribute("userId")).orElseThrow();
             submission.addApprovedUser(user);
             user.addSubmissionApprovedOn(submission);
             submissionRepository.save(submission);
