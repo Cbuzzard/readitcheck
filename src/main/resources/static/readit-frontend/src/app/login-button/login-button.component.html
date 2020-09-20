@@ -1,4 +1,8 @@
-<button *ngIf="!loginStatus" (click)='login()' mat-raised-button>Login</button>
-<button *ngIf="loginStatus" (click)='logout()' mat-raised-button>Logout</button>
-
-<button (click)='changeStatus()'>change</button>
+<button *ngIf="!loginStatus" (click)='login()' mat-menu-item>
+    <mat-icon>login</mat-icon>
+    <span>Login</span>
+</button>
+<button *ngIf="loginStatus" (click)='logout()' mat-menu-item>
+    <mat-icon>logout</mat-icon>
+    <span>Logout</span>
+</button>
