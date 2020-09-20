@@ -1,0 +1,40 @@
+<!-- <mat-card id="newsubmissioncard">
+    <mat-form-field id="input" appearance="outline">
+        <mat-label>New Submission</mat-label>
+        <input matInput placeholder="Placeholder">
+      </mat-form-field>
+</mat-card> -->
+
+<mat-accordion>
+    <form [formGroup]="submissionForm" (ngSubmit)="onSubmit(submissionForm.value)">
+        <mat-expansion-panel id="newsubmissioncard" hideToggle>
+            <mat-expansion-panel-header [collapsedHeight]="'80px'" [expandedHeight]="'80px'">
+
+                <mat-form-field id="input" appearance="outline">
+                    <mat-label>New Submission</mat-label>
+                    <input formControlName="title" matInput placeholder="Title">
+                </mat-form-field>
+
+            </mat-expansion-panel-header>
+
+            <mat-form-field id="input" appearance="outline">
+                <mat-label>Link</mat-label>
+                <input formControlName="link" matInput placeholder="Link">
+            </mat-form-field>
+
+            <mat-form-field id="input" appearance="outline">
+                <mat-label>Question</mat-label>
+                <input formControlName="question" matInput placeholder="Question">
+            </mat-form-field>
+
+            <mat-form-field id="input" appearance="outline">
+                <mat-label>Answer</mat-label>
+                <input formControlName="answer" matInput placeholder="Answer">
+            </mat-form-field>
+
+            <button type="submit" id="submitbtn" mat-button>Submit</button>
+
+        </mat-expansion-panel>
+
+    </form>
+</mat-accordion>
