@@ -51,11 +51,10 @@ export class UserService {
     })
   }
 
-  initGoogleAuth() {
+  async initGoogleAuth() {
     if (!this.gapiSetup) {
       const pload = new Promise((resolve) => {
         gapi.load('auth2', resolve);
-        gapi.signin2.render("testid", {})
       });
   
       return pload.then(async () => {
