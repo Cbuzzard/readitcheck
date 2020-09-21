@@ -46,7 +46,7 @@ public class QuestionController {
 
         return new SubmissionGetDto(
                 submission.getId(),
-                submission.getUser(),
+                submission.getUser().getGoogleId(),
                 submission.getTitle(),
                 submission.getLink(),
                 submission.getQuestions(),
