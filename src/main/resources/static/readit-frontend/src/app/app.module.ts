@@ -16,6 +16,12 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {MatDialogModule} from '@angular/material/dialog';
+import { SubmissionFormDialogComponent } from './submission-form-dialog/submission-form-dialog.component';
+import { AppRoutingModule } from './app-routing.module';
+import { HomeComponent } from './home/home.component';
+import { SubmissionComponent } from './submission/submission.component';
+
 
 //TODO organize imports
 
@@ -24,7 +30,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AppComponent,
     LoginButtonComponent,
     HeaderComponent,
-    NewSubmissionComponent
+    NewSubmissionComponent,
+    SubmissionFormDialogComponent,
+    HomeComponent,
+    SubmissionComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +48,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatInputModule,
     MatExpansionModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDialogModule,
+    AppRoutingModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true}],
   bootstrap: [AppComponent]
