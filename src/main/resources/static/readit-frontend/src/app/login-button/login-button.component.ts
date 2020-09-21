@@ -8,30 +8,20 @@ import { UserService } from '../service/user/user.service'
 })
 export class LoginButtonComponent implements OnInit {
 
-  loginStatus = this.user.loginStatus;
+  loginStatus: boolean;
 
   constructor(private user: UserService) {
-    this.user.authenticate().then(res => this.loginStatus = JSON.stringify(res) === 'true')
+    this.user.loginStatus.subscribe(res => this.loginStatus = res)
   }
 
-  ngOnInit(): void {
-    this.setLoginStatus();
-  }
+  ngOnInit(): void { }
 
   login() {
-    this.user.login().then(res => this.loginStatus = res);
+    this.user.login()
   }
 
   logout() {
-    this.user.logout().then(res => this.loginStatus = res);
-  }
-
-  setLoginStatus() {
-    this.loginStatus = this.user.loginStatus;
-  }
-
-  changeStatus() {
-    this.loginStatus = !this.loginStatus;
+    this.user.logout()
   }
 
 }
