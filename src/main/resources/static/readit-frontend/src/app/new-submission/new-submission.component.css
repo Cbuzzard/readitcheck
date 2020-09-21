@@ -1,5 +1,6 @@
 #newsubmissioncard {
     margin: 2% auto 0 auto;
+    width: 89%;
     max-width: 600px;
 }
 
@@ -7,7 +8,6 @@
     width: 100%;
 }
 
-#submitbtn {
-    display: block;
-    margin: 16px 0 0 auto;
+input {
+    visibility: hidden;
 }

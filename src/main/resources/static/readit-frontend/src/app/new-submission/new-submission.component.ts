@@ -3,6 +3,10 @@ import {MatAccordion} from '@angular/material/expansion';
 import { FormBuilder } from '@angular/forms';
 import {SubmissionPost} from '../dto/submission-post'
 import {Question} from '../dto/question'
+import { UserService } from '../service/user/user.service';
+import { RestService } from "../service/rest/rest.service"
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { SubmissionFormDialogComponent } from '../submission-form-dialog/submission-form-dialog.component';
 
 
 @Component({
@@ -12,28 +16,23 @@ import {Question} from '../dto/question'
 })
 export class NewSubmissionComponent implements OnInit {
 
-  submissionForm;
+  loginStatus: boolean;
 
-  @ViewChild(MatAccordion) accordion: MatAccordion;
-
-  constructor(private formBuilder: FormBuilder) {
-    this.submissionForm = this.formBuilder.group({
-      title: '',
-      link: '',
-      question: '',
-      answer: ''
-    })
+  constructor(private user: UserService, private rest: RestService, public dialog: MatDialog) {
+    this.user.loginStatus.subscribe(res => this.loginStatus = res)
   }
 
   ngOnInit(): void {
   }
 
-  onSubmit(submissionData) {
-    let question = new Question(submissionData.question, submissionData.answer);
-    let questions: Array<Question> = []
-    questions.push(question)
-    let submission = new SubmissionPost(submissionData.title, submissionData.link, questions)
-    console.log(submission)
+  openDialog() {
+    if (this.loginStatus) {
+      const dialogRef = this.dialog.open(SubmissionFormDialogComponent, {
+        width: '50%',
+        minWidth: '350px',
+      })
+    } else {
+      this.user.login();
+    }
   }
-
 }
