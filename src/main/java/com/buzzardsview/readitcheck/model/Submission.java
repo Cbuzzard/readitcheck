@@ -1,5 +1,7 @@
 package com.buzzardsview.readitcheck.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -7,7 +9,6 @@ import java.util.List;
         name = "submission-entity-graph",
         attributeNodes = {
                 @NamedAttributeNode("comments"),
-                @NamedAttributeNode("questions")
         }
 )
 @Entity
@@ -21,6 +22,9 @@ public class Submission extends Content {
     private List<Question> questions;
     @ManyToMany(mappedBy = "submissionsApprovedOn")
     private List<User> approvedUsers;
+
+    public Submission() {
+    }
 
     public Submission(User user, String title, String link, List<Question> questions) {
         super(user);
@@ -63,6 +67,7 @@ public class Submission extends Content {
         this.comments.add(comment);
     }
 
+    @JsonBackReference
     public List<Question> getQuestions() {
         return questions;
     }

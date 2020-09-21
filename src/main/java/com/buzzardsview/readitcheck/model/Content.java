@@ -1,5 +1,8 @@
 package com.buzzardsview.readitcheck.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @MappedSuperclass
@@ -8,7 +11,7 @@ public abstract class Content {
     @Id
     @GeneratedValue
     private int id;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "google_id")
     private User user;
     private long timestamp;
@@ -29,6 +32,7 @@ public abstract class Content {
         this.id = id;
     }
 
+    @JsonBackReference
     public User getUser() {
         return user;
     }

@@ -1,5 +1,8 @@
 package com.buzzardsview.readitcheck.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.List;
@@ -69,6 +72,7 @@ public class User {
         this.comments.add(comment);
     }
 
+    @JsonBackReference
     public List<Submission> getSubmissions() {
         return submissions;
     }

@@ -2,14 +2,13 @@ package com.buzzardsview.readitcheck.model.dto;
 
 import com.buzzardsview.readitcheck.model.Comment;
 import com.buzzardsview.readitcheck.model.Question;
-import com.buzzardsview.readitcheck.model.User;
 
 import java.util.List;
 
 public class SubmissionGetDto {
 
     private int id;
-    private User user;
+    private String userId;
     private String title;
     private String link;
     private List<Question> questions;
@@ -17,9 +16,9 @@ public class SubmissionGetDto {
     private long timestamp;
     private boolean currentUserApproved;
 
-    public SubmissionGetDto(int id, User user, String title, String link, List<Question> questions, List<Comment> comments, long timestamp, boolean currentUserApproved) {
+    public SubmissionGetDto(int id, String user, String title, String link, List<Question> questions, List<Comment> comments, long timestamp, boolean currentUserApproved) {
         this.id = id;
-        this.user = user;
+        this.userId = user;
         this.title = title;
         this.link = link;
         this.questions = questions;
@@ -36,12 +35,12 @@ public class SubmissionGetDto {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getTitle() {

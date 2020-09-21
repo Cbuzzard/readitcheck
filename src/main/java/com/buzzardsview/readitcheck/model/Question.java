@@ -1,5 +1,7 @@
 package com.buzzardsview.readitcheck.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -47,6 +49,7 @@ public class Question {
         this.answer = answer;
     }
 
+    @JsonBackReference
     public Submission getSubmission() {
         return submission;
     }
