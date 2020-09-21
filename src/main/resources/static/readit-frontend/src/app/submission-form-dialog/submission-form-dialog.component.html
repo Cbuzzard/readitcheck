@@ -1,0 +1,26 @@
+<div id="header">
+    <h2>New Submission</h2>
+</div>
+
+<form [formGroup]="submissionForm" (ngSubmit)="onSubmit(submissionForm.value)">
+<mat-form-field id="input" appearance="outline">
+    <mat-label>New Submission</mat-label>
+    <input matInput placeholder="Title" formControlName="title">
+</mat-form-field>
+
+<mat-form-field id="input" appearance="outline">
+    <mat-label>Link</mat-label>
+    <input matInput placeholder="Link" formControlName="link">
+</mat-form-field>
+
+<mat-form-field id="input" appearance="outline">
+    <mat-label>Question</mat-label>
+    <input matInput placeholder="Question" formControlName="question">
+</mat-form-field>
+
+<mat-form-field id="input" appearance="outline">
+    <mat-label>Answer</mat-label>
+    <input matInput placeholder="Answer" formControlName="answer">
+</mat-form-field>
+<button id="submitbtn" mat-button type="submit">Submit</button>
+</form>
