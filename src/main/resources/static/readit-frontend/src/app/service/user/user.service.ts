@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, XhrFactory } from '@angular/common/http';
 import { UrlService } from '../url/url.service';
-import { Observable } from 'rxjs';
-
-
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +9,12 @@ import { Observable } from 'rxjs';
 export class UserService {
 
   gapiSetup: boolean = false;
-  loginStatus: boolean = false;
+  loginStatus: Subject<boolean> = new Subject<boolean>();
   authInstance: gapi.auth2.GoogleAuth;
 
   constructor(private http: HttpClient, private url: UrlService) {
     this.initGoogleAuth();
-    this.authenticate().then(res => this.loginStatus = JSON.stringify(res) === 'true')
+    this.authenticate().then(res => this.loginStatus.next(JSON.stringify(res) === 'true'))
   }
 
   async authenticate(): Promise<Object> {
@@ -24,30 +22,24 @@ export class UserService {
     return await this.http.get(`${this.url.backend}/rest/authenticate`, httpOptions).toPromise();
   }
 
-  async login(): Promise<boolean> {
-    return new Promise<boolean>((resolve, reject) => {
-      this.authInstance.signIn().then(user => {
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', `${this.url.backend}/login`);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.setRequestHeader('X-ID-TOKEN', user.getAuthResponse().id_token);
-        xhr.send();
-        xhr.onload = async () => {
-          sessionStorage.setItem('token', xhr.getResponseHeader('Authorization'))
-          await this.authenticate().then(res => this.loginStatus = JSON.stringify(res) === 'true')
-          resolve(this.loginStatus);
-        };
-      })
+  login() {
+    this.authInstance.signIn().then(user => {
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', `${this.url.backend}/login`);
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.setRequestHeader('X-ID-TOKEN', user.getAuthResponse().id_token);
+      xhr.send();
+      xhr.onload = async () => {
+        sessionStorage.setItem('token', xhr.getResponseHeader('Authorization'))
+        this.authenticate().then(res => this.loginStatus.next(JSON.stringify(res) === 'true'))
+      };
     })
   }
 
-  async logout(): Promise<boolean> {
-    return new Promise<boolean>((resolve, reject) => {
-      gapi.auth2.getAuthInstance().signOut().then(async () => {
-        sessionStorage.clear();
-        await this.authenticate().then(res => this.loginStatus = JSON.stringify(res) === 'true');
-        resolve(this.loginStatus)
-      })
+  logout() {
+    gapi.auth2.getAuthInstance().signOut().then(async () => {
+      sessionStorage.clear();
+      await this.authenticate().then(res => this.loginStatus.next(JSON.stringify(res) === 'true'));
     })
   }
 
@@ -68,5 +60,4 @@ export class UserService {
       }
     }
     
-
 }
