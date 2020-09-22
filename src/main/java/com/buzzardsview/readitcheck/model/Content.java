@@ -2,6 +2,7 @@ package com.buzzardsview.readitcheck.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 
@@ -11,7 +12,7 @@ public abstract class Content {
     @Id
     @GeneratedValue
     private int id;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "google_id")
     private User user;
     private long timestamp;
@@ -32,7 +33,6 @@ public abstract class Content {
         this.id = id;
     }
 
-    @JsonBackReference
     public User getUser() {
         return user;
     }

@@ -8,7 +8,14 @@ import java.util.List;
 @NamedEntityGraph(
         name = "submission-entity-graph",
         attributeNodes = {
-                @NamedAttributeNode("comments"),
+                @NamedAttributeNode(value = "user", subgraph = "user-subgraph"),
+                @NamedAttributeNode("title")
+        },
+        subclassSubgraphs = {
+                @NamedSubgraph(
+                        name = "user-subgraph",
+                        attributeNodes = {@NamedAttributeNode("googleId")}
+                )
         }
 )
 @Entity
@@ -67,7 +74,6 @@ public class Submission extends Content {
         this.comments.add(comment);
     }
 
-    @JsonBackReference
     public List<Question> getQuestions() {
         return questions;
     }

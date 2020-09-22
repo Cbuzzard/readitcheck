@@ -1,18 +1,20 @@
 package com.buzzardsview.readitcheck.model;
 
+import com.buzzardsview.readitcheck.model.dto.UserSimpleDto;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.List;
 
-@NamedEntityGraph(
-        name = "user-entity-graph",
-        attributeNodes = {
-                @NamedAttributeNode("comments"),
-        }
-)
+//@NamedEntityGraph(
+//        name = "user-entity-graph",
+//        attributeNodes = {
+//                @NamedAttributeNode("comments"),
+//        }
+//)
 @Entity
 public class User {
 
@@ -24,9 +26,9 @@ public class User {
     private String googleId;
     private String name;
     private String username;
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user")
     private List<Comment> comments;
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Submission> submissions;
     @ManyToMany
     private List<Submission> submissionsApprovedOn;
@@ -72,7 +74,6 @@ public class User {
         this.comments.add(comment);
     }
 
-    @JsonBackReference
     public List<Submission> getSubmissions() {
         return submissions;
     }
@@ -95,5 +96,9 @@ public class User {
 
     public void addSubmissionApprovedOn(Submission submission) {
         this.submissionsApprovedOn.add(submission);
+    }
+
+    public UserSimpleDto getSimpleUser() {
+        return new UserSimpleDto(this.googleId, this.username);
     }
 }
