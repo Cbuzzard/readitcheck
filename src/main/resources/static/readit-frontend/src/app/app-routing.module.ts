@@ -3,10 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { SubmissionComponent } from './submission/submission.component';
+import { UserComponent } from './user/user.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'submission/:id', component: SubmissionComponent }
+  { path: 'submission/:id', component: SubmissionComponent },
+  { path: 'user/:id', component: UserComponent}
 ];
 
 @NgModule({
