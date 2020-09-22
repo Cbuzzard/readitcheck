@@ -21,7 +21,9 @@ import { SubmissionFormDialogComponent } from './submission-form-dialog/submissi
 import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './home/home.component';
 import { SubmissionComponent } from './submission/submission.component';
-
+import { SimpleSubmissionComponent } from './simple-submission/simple-submission.component';
+import {MatDividerModule} from '@angular/material/divider';
+import { UserComponent } from './user/user.component';
 
 //TODO organize imports
 
@@ -33,7 +35,9 @@ import { SubmissionComponent } from './submission/submission.component';
     NewSubmissionComponent,
     SubmissionFormDialogComponent,
     HomeComponent,
-    SubmissionComponent
+    SubmissionComponent,
+    SimpleSubmissionComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +54,8 @@ import { SubmissionComponent } from './submission/submission.component';
     FormsModule,
     ReactiveFormsModule,
     MatDialogModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatDividerModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true}],
   bootstrap: [AppComponent]
