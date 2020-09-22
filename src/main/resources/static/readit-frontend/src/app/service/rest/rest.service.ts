@@ -21,6 +21,14 @@ export class RestService {
 
   getSubmission(id: number) {
     return this.http.get(`${this.url.backend}/rest/submission/${id}`)
-  } 
+  }
+
+  getSubmissions(page: number) {
+    return this.http.get(`${this.url.backend}/rest/submission?page=${page}`)
+  }
+
+  getLinkPreview(url: string) {
+    return this.http.get(`${this.url.backend}/rest/link?url=${url}`)
+  }
 
 }
