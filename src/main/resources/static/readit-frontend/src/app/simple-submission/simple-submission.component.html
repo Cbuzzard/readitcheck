@@ -1,0 +1,23 @@
+<mat-card class="card">
+    <div id="textcontainer">
+        <div class="titlecontainer">
+            <h2 routerLink="submission/{{submission.id}}" class="title clickable">{{submission.title}}</h2>
+        </div>
+        <a class="link" href="{{submission.link}}">{{submission.link}}</a>
+        <div class="footercontainer">
+            <div class="commentscontainer">
+                <button routerLink="submission/{{submission.id}}" class="comments clickable" mat-mini-fab color="basic">
+                    <mat-icon [inline]="true">comment</mat-icon>
+                </button>
+                <p routerLink="submission/{{submission.id}}" class="clickable">Comments</p>
+            </div>
+            <div class="usercontainer">
+                <p>posted by: </p>
+                <p routerLink="user/{{submission.user.id}}" class="clickable">{{submission.user.username}}</p>
+            </div>
+        </div>
+    </div>
+    <a href="{{submission.link}}">
+        <img src="{{linkPreview}}" alt="">
+    </a>
+</mat-card>

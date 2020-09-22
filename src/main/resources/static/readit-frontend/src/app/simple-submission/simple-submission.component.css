@@ -1,0 +1,58 @@
+.card {
+    margin: 2% auto 0 auto;
+    width: 89%;
+    max-width: 600px;
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+}
+
+img {
+    height: 80px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.65);
+}
+
+.titlecontainer {
+    margin-top: 5px;
+    height: fit-content;
+    border-bottom: rgba(255, 255, 255, 0.2) 1px solid;
+    width: 95%;
+}
+
+.title {
+    line-height: 50%;
+}
+
+.link {
+    display: block;
+    margin: 10px 0 10px 0;
+    color: rgb(113, 175, 255);
+}
+
+.footercontainer {
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+}
+
+.commentscontainer {
+    display: inline;
+}
+
+.comments {
+    height: 35px;
+    width: 35px;
+}
+
+.usercontainer {
+    align-self: center;
+}
+
+p {
+    margin: 0 0 0 5px;
+    display: inline-block;
+}
+
+.clickable {
+    cursor: pointer;
+}
