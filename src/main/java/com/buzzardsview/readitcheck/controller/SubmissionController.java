@@ -6,7 +6,10 @@ import com.buzzardsview.readitcheck.data.UserRepository;
 import com.buzzardsview.readitcheck.model.Question;
 import com.buzzardsview.readitcheck.model.Submission;
 import com.buzzardsview.readitcheck.model.User;
-import com.buzzardsview.readitcheck.model.dto.*;
+import com.buzzardsview.readitcheck.model.dto.comment.CommentForListDto;
+import com.buzzardsview.readitcheck.model.dto.submission.SubmissionForListDto;
+import com.buzzardsview.readitcheck.model.dto.submission.SubmissionGetDto;
+import com.buzzardsview.readitcheck.model.dto.submission.SubmissionPostDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,9 +17,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletRequest;
-import org.springframework.data.domain.Pageable;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,13 +45,23 @@ public class SubmissionController {
 
         boolean currentUserApproved = user == null ? false : submission.getApprovedUsers().contains(user);
 
+        List<CommentForListDto> comments = submission.getComments().stream().map(c ->
+                new CommentForListDto(
+                        c.getId(),
+                        c.getContent(),
+                        c.getTimestamp(),
+                        c.getUser().getSimpleUser(),
+                        c.getSubmission().getId()
+                )
+        ).collect(Collectors.toList());
+
         return new SubmissionGetDto(
                 submission.getId(),
-                submission.getUser().getGoogleId(),
+                submission.getUser().getSimpleUser(),
                 submission.getTitle(),
                 submission.getLink(),
-                submission.getQuestions(),
-                submission.getComments(),
+                submission.getQuestion().getQuestionGet(),
+                comments,
                 submission.getTimestamp(),
                 currentUserApproved
         );
@@ -63,23 +73,24 @@ public class SubmissionController {
         User user = userRepository.findById((String) request.getAttribute("userId")).orElseThrow();
         Submission newSubmission = new Submission(user, submissionDto.getTitle(), submissionDto.getLink());
 
-        List<Question> questions = new ArrayList<>();
-        for (QuestionPostDto questionDto : submissionDto.getQuestions()) {
-            questions.add(new Question(questionDto.getQuestion(), questionDto.getAnswer(), newSubmission));
-        }
+        Question question = new Question(
+                submissionDto.getQuestion().getQuestion(),
+                submissionDto.getQuestion().getAnswer(),
+                newSubmission
+        );
 
-        newSubmission.setQuestions(questions);
+        newSubmission.setQuestion(question);
         submissionRepository.save(newSubmission);
-        questionRepository.saveAll(questions);
+        questionRepository.save(question);
         submissionRepository.flush();
         return newSubmission.getId();
     }
 
     @GetMapping
     public List<SubmissionForListDto> list(@RequestParam(name = "page", defaultValue = "0") int page,
-                                           @RequestParam(name = "size", defaultValue = "10") int size) {
+                                           @RequestParam(name = "size", defaultValue = "5") int size) {
 
-        Page<Submission> submissionPage = submissionRepository.findAll(PageRequest.of(page, size, Sort.by("timestamp")));
+        Page<Submission> submissionPage = submissionRepository.findAll(PageRequest.of(page, size, Sort.by("timestamp").descending()));
         List<SubmissionForListDto> submissionsForListDto = submissionPage.getContent().stream().map(s ->
                         new SubmissionForListDto(
                                 s.getId(),

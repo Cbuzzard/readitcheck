@@ -1,7 +1,5 @@
 package com.buzzardsview.readitcheck.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -25,19 +23,19 @@ public class Submission extends Content {
     private String link;
     @OneToMany(mappedBy = "submission")
     private List<Comment> comments;
-    @OneToMany(mappedBy = "submission")
-    private List<Question> questions;
+    @OneToOne(mappedBy = "submission")
+    private Question question;
     @ManyToMany(mappedBy = "submissionsApprovedOn")
     private List<User> approvedUsers;
 
     public Submission() {
     }
 
-    public Submission(User user, String title, String link, List<Question> questions) {
+    public Submission(User user, String title, String link, Question question) {
         super(user);
         this.title = title;
         this.link = link;
-        this.questions = questions;
+        this.question = question;
     }
 
     public Submission(User user, String title, String link) {
@@ -74,12 +72,12 @@ public class Submission extends Content {
         this.comments.add(comment);
     }
 
-    public List<Question> getQuestions() {
-        return questions;
+    public Question getQuestion() {
+        return question;
     }
 
-    public void setQuestions(List<Question> questions) {
-        this.questions = questions;
+    public void setQuestion(Question question) {
+        this.question = question;
     }
 
     public List<User> getApprovedUsers() {

@@ -1,9 +1,6 @@
 package com.buzzardsview.readitcheck.model;
 
-import com.buzzardsview.readitcheck.model.dto.UserSimpleDto;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.buzzardsview.readitcheck.model.dto.user.UserSimpleDto;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;

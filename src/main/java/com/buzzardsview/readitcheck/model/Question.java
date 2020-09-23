@@ -1,5 +1,6 @@
 package com.buzzardsview.readitcheck.model;
 
+import com.buzzardsview.readitcheck.model.dto.question.QuestionGetDto;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
@@ -12,7 +13,7 @@ public class Question {
     private int id;
     private String question;
     private String answer;
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "submission_id")
     private Submission submission;
 
@@ -60,5 +61,9 @@ public class Question {
 
     public boolean checkAnswer(String answer) {
         return this.answer.toLowerCase().equals(answer.toLowerCase());
+    }
+
+    public QuestionGetDto getQuestionGet() {
+        return new QuestionGetDto(this.id, this.question);
     }
 }

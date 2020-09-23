@@ -1,4 +1,6 @@
-package com.buzzardsview.readitcheck.model.dto;
+package com.buzzardsview.readitcheck.model.dto.comment;
+
+import com.buzzardsview.readitcheck.model.dto.user.UserSimpleDto;
 
 public class CommentForListDto {
 
@@ -6,12 +8,14 @@ public class CommentForListDto {
     private String content;
     private long timestamp;
     private UserSimpleDto user;
+    private int submissionId;
 
-    public CommentForListDto(int id, String content, long timestamp, UserSimpleDto user) {
+    public CommentForListDto(int id, String content, long timestamp, UserSimpleDto user, int submissionId) {
         this.id = id;
         this.content = content;
         this.timestamp = timestamp;
         this.user = user;
+        this.submissionId = submissionId;
     }
 
     public CommentForListDto() {
@@ -47,5 +51,13 @@ public class CommentForListDto {
 
     public void setUser(UserSimpleDto user) {
         this.user = user;
+    }
+
+    public int getSubmissionId() {
+        return submissionId;
+    }
+
+    public void setSubmissionId(int submissionId) {
+        this.submissionId = submissionId;
     }
 }

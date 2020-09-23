@@ -1,27 +1,28 @@
-package com.buzzardsview.readitcheck.model.dto;
+package com.buzzardsview.readitcheck.model.dto.submission;
 
-import com.buzzardsview.readitcheck.model.Comment;
-import com.buzzardsview.readitcheck.model.Question;
+import com.buzzardsview.readitcheck.model.dto.comment.CommentForListDto;
+import com.buzzardsview.readitcheck.model.dto.question.QuestionGetDto;
+import com.buzzardsview.readitcheck.model.dto.user.UserSimpleDto;
 
 import java.util.List;
 
 public class SubmissionGetDto {
 
     private int id;
-    private String userId;
+    private UserSimpleDto user;
     private String title;
     private String link;
-    private List<Question> questions;
-    private List<Comment> comments;
+    private QuestionGetDto question;
+    private List<CommentForListDto> comments;
     private long timestamp;
     private boolean currentUserApproved;
 
-    public SubmissionGetDto(int id, String user, String title, String link, List<Question> questions, List<Comment> comments, long timestamp, boolean currentUserApproved) {
+    public SubmissionGetDto(int id, UserSimpleDto user, String title, String link, QuestionGetDto question, List<CommentForListDto> comments, long timestamp, boolean currentUserApproved) {
         this.id = id;
-        this.userId = user;
+        this.user = user;
         this.title = title;
         this.link = link;
-        this.questions = questions;
+        this.question = question;
         this.comments = comments;
         this.timestamp = timestamp;
         this.currentUserApproved = currentUserApproved;
@@ -35,12 +36,12 @@ public class SubmissionGetDto {
         this.id = id;
     }
 
-    public String getUserId() {
-        return userId;
+    public UserSimpleDto getUser() {
+        return user;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUser(UserSimpleDto user) {
+        this.user = user;
     }
 
     public String getTitle() {
@@ -59,19 +60,19 @@ public class SubmissionGetDto {
         this.link = link;
     }
 
-    public List<Question> getQuestions() {
-        return questions;
+    public QuestionGetDto getQuestion() {
+        return question;
     }
 
-    public void setQuestions(List<Question> questions) {
-        this.questions = questions;
+    public void setQuestion(QuestionGetDto question) {
+        this.question = question;
     }
 
-    public List<Comment> getComments() {
+    public List<CommentForListDto> getComments() {
         return comments;
     }
 
-    public void setComments(List<Comment> comments) {
+    public void setComments(List<CommentForListDto> comments) {
         this.comments = comments;
     }
 

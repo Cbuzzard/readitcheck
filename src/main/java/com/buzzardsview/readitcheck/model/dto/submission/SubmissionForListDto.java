@@ -1,4 +1,6 @@
-package com.buzzardsview.readitcheck.model.dto;
+package com.buzzardsview.readitcheck.model.dto.submission;
+
+import com.buzzardsview.readitcheck.model.dto.user.UserSimpleDto;
 
 public class SubmissionForListDto {
 

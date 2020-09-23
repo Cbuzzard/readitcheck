@@ -1,4 +1,4 @@
-package com.buzzardsview.readitcheck.model.dto;
+package com.buzzardsview.readitcheck.model.dto.comment;
 
 public class CommentPostDto {
 
