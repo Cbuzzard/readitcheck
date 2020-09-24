@@ -1,0 +1,18 @@
+.nocomments {
+    display: flex;
+    justify-items: center;
+}
+
+.commentcontent {
+    margin: 0;
+}
+
+.commentfooter {
+    display: flex;
+    justify-content: space-between;
+}
+
+.commentcontainer {
+    margin-bottom: 16px;
+    overflow-y: hidden;
+}

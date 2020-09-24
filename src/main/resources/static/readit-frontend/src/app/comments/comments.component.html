@@ -1,0 +1,25 @@
+<mat-card class="card commentcontainer">
+
+    <h2>Comments</h2>
+    <mat-divider></mat-divider><br>
+
+    <div *ngIf="comments.length === 0" class="nocomments">
+        <mat-icon>announcement</mat-icon>
+        <p> No comments yet. Be the first to comment.</p>
+    </div>
+
+    <div *ngIf="comments.length > 0">
+        <div *ngFor="let comment of comments" class="comment">
+            <h3 class="commentcontent">{{comment.content}}</h3><br>
+            <div class="commentfooter">
+                <div>
+                    <p>posted by: </p>
+                    <p routerLink="/user/{{comment.user.id}}" class="clickable profilelink">{{comment.user.username}}</p>
+                </div>
+                <p class="timestamp">{{getDateString(comment.timestamp)}}</p>
+            </div>
+            <mat-divider></mat-divider><br>
+        </div>
+    </div>
+
+</mat-card>
