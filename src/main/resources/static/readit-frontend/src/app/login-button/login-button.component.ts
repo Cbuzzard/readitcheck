@@ -24,4 +24,16 @@ export class LoginButtonComponent implements OnInit {
     this.user.logout()
   }
 
+  getUser() {
+    return sessionStorage.getItem('userId');
+  }
+
+  getName() {
+    return sessionStorage.getItem('userName');
+  }
+
+  getUserImg() {
+    return sessionStorage.getItem("userImg")
+  }
+
 }
