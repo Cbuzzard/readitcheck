@@ -1,0 +1,8 @@
+.questionheader {
+    display: flex;
+    justify-content: space-between;
+}
+
+.tooltipred{
+    background: #b71c1c;
+}

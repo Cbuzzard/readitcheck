@@ -1,0 +1,13 @@
+<mat-card class="card">
+    <form [formGroup]="questionForm" (ngSubmit)="onQuestionSubmit(questionForm.value)">
+            <div class="questionheader">
+                <h3>{{question.question}}</h3>
+                <mat-icon class="attentionicon" color="warn" matTooltip="You are not approved to comment. Answer this question to be approved to comment." matTooltipClass="tooltipred">error</mat-icon>
+            </div>
+            <mat-form-field (click)="loginStatus || login()" class="input" appearance="outline">
+                <mat-label>Answer</mat-label>
+                <input  (keyup.enter)="ngSubmit" matInput placeholder="Answer" formControlName="answer">
+                <mat-error>{{questionError}}</mat-error>
+            </mat-form-field>
+    </form>
+</mat-card>
