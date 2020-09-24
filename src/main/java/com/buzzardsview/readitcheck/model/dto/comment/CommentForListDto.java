@@ -9,6 +9,16 @@ public class CommentForListDto {
     private long timestamp;
     private UserSimpleDto user;
     private int submissionId;
+    private String submissionTitle;
+
+    public CommentForListDto(int id, String content, long timestamp, UserSimpleDto user, int submissionId, String submissionTitle) {
+        this.id = id;
+        this.content = content;
+        this.timestamp = timestamp;
+        this.user = user;
+        this.submissionId = submissionId;
+        this.submissionTitle = submissionTitle;
+    }
 
     public CommentForListDto(int id, String content, long timestamp, UserSimpleDto user, int submissionId) {
         this.id = id;
@@ -59,5 +69,13 @@ public class CommentForListDto {
 
     public void setSubmissionId(int submissionId) {
         this.submissionId = submissionId;
+    }
+
+    public String getSubmissionTitle() {
+        return submissionTitle;
+    }
+
+    public void setSubmissionTitle(String submissionTitle) {
+        this.submissionTitle = submissionTitle;
     }
 }
