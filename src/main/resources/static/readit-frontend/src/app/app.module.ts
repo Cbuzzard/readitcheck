@@ -24,6 +24,13 @@ import { SubmissionComponent } from './submission/submission.component';
 import { SimpleSubmissionComponent } from './simple-submission/simple-submission.component';
 import {MatDividerModule} from '@angular/material/divider';
 import { UserComponent } from './user/user.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { QuestionComponent } from './question/question.component';
+import { CommentsComponent } from './comments/comments.component';
+import { NewCommentComponent } from './new-comment/new-comment.component';
+
 
 //TODO organize imports
 
@@ -37,7 +44,10 @@ import { UserComponent } from './user/user.component';
     HomeComponent,
     SubmissionComponent,
     SimpleSubmissionComponent,
-    UserComponent
+    UserComponent,
+    QuestionComponent,
+    CommentsComponent,
+    NewCommentComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +65,10 @@ import { UserComponent } from './user/user.component';
     ReactiveFormsModule,
     MatDialogModule,
     AppRoutingModule,
-    MatDividerModule
+    MatDividerModule,
+    InfiniteScrollModule,
+    MatSnackBarModule,
+    MatTooltipModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true}],
   bootstrap: [AppComponent]
