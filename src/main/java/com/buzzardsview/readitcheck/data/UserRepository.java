@@ -7,7 +7,6 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, String> {
 
-    @EntityGraph("user-entity-graph")
     Optional<User> getByGoogleId(String id);
 
 }

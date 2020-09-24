@@ -14,7 +14,8 @@ import static com.buzzardsview.readitcheck.security.AppTokenProvider.getUserFrom
 public class AuthenticateController {
 
     @GetMapping("")
-    public boolean authenticateUser(HttpServletRequest request, ServletResponse servletResponse) {
+    public boolean authenticateUser(HttpServletRequest request) {
+
         Optional<String> userFromToken;
         try {
             userFromToken = getUserFromToken(request);

@@ -23,7 +23,7 @@ public class Submission extends Content {
     private String link;
     @OneToMany(mappedBy = "submission")
     private List<Comment> comments;
-    @OneToOne(mappedBy = "submission")
+    @OneToOne(mappedBy = "submission", cascade=CascadeType.ALL)
     private Question question;
     @ManyToMany(mappedBy = "submissionsApprovedOn")
     private List<User> approvedUsers;
