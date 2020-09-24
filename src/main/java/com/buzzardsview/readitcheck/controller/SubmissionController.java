@@ -17,6 +17,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletRequest;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,11 +40,13 @@ public class SubmissionController {
         User user = null;
 
         Submission submission = submissionRepository.getById(id).orElseThrow();
-        if (((String) request.getAttribute("userId")) != null) {
+        if ((request.getAttribute("userId")) != null) {
             user = userRepository.findById((String) request.getAttribute("userId")).orElseThrow();
         }
 
-        boolean currentUserApproved = user == null ? false : submission.getApprovedUsers().contains(user);
+        boolean currentUserApproved = user != null && submission.getApprovedUsers().contains(user);
+
+
 
         List<CommentForListDto> comments = submission.getComments().stream().map(c ->
                 new CommentForListDto(
@@ -54,6 +57,10 @@ public class SubmissionController {
                         c.getSubmission().getId()
                 )
         ).collect(Collectors.toList());
+
+        Comparator<CommentForListDto> compareByTimeStamp = Comparator.comparing((CommentForListDto o) -> ((Long) o.getTimestamp())).reversed();
+
+        comments.sort(compareByTimeStamp);
 
         return new SubmissionGetDto(
                 submission.getId(),
@@ -68,21 +75,19 @@ public class SubmissionController {
     }
 
     @PostMapping
-    public Integer newSubmission(@RequestBody SubmissionPostDto submissionDto, ServletRequest request) {
+    public Integer newSubmission(@RequestBody SubmissionPostDto submissionPostDto, ServletRequest request) {
 
         User user = userRepository.findById((String) request.getAttribute("userId")).orElseThrow();
-        Submission newSubmission = new Submission(user, submissionDto.getTitle(), submissionDto.getLink());
+        Submission newSubmission = new Submission(user, submissionPostDto.getTitle(), submissionPostDto.getLink());
 
         Question question = new Question(
-                submissionDto.getQuestion().getQuestion(),
-                submissionDto.getQuestion().getAnswer(),
+                submissionPostDto.getQuestion().getQuestion(),
+                submissionPostDto.getQuestion().getAnswer(),
                 newSubmission
         );
 
         newSubmission.setQuestion(question);
         submissionRepository.save(newSubmission);
-        questionRepository.save(question);
-        submissionRepository.flush();
         return newSubmission.getId();
     }
 
