@@ -28,12 +28,9 @@ public class QuestionController {
 
     @PostMapping("{id}")
     public boolean checkAnswer(@RequestBody String answer, @PathVariable Integer id, ServletRequest request) {
-        System.out.println("hi");
 
         Question question = questionRepository.findById(id).orElseThrow();
         Submission submission = submissionRepository.getById(question.getSubmission().getId()).orElseThrow();
-
-        System.out.println(answer);
 
         boolean answeredCorrectly = question.checkAnswer(answer);
 
@@ -46,27 +43,6 @@ public class QuestionController {
         }
 
         return answeredCorrectly;
-
-//        List<CommentForListDto> comments = submission.getComments().stream().map(c ->
-//                new CommentForListDto(
-//                        c.getId(),
-//                        c.getContent(),
-//                        c.getTimestamp(),
-//                        c.getUser().getSimpleUser()
-//                )
-//        ).collect(Collectors.toList());
-//
-//        return new SubmissionGetDto(
-//                submission.getId(),
-//                submission.getUser().getSimpleUser(),
-//                submission.getTitle(),
-//                submission.getLink(),
-//                submission.getQuestions(),
-//                comments,
-//                submission.getTimestamp(),
-//                answeredCorrectly
-//        );
-
     }
 
 }
