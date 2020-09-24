@@ -6,12 +6,6 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.List;
 
-//@NamedEntityGraph(
-//        name = "user-entity-graph",
-//        attributeNodes = {
-//                @NamedAttributeNode("comments"),
-//        }
-//)
 @Entity
 public class User {
 
@@ -23,6 +17,7 @@ public class User {
     private String googleId;
     private String name;
     private String username;
+    private String picture;
     @OneToMany(mappedBy = "user")
     private List<Comment> comments;
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
@@ -30,10 +25,11 @@ public class User {
     @ManyToMany
     private List<Submission> submissionsApprovedOn;
 
-    public User(String googleId, String name) {
+    public User(String googleId, String name, String profilePic) {
         this.googleId = googleId;
         this.name = name;
         this.username = name;
+        this.picture = profilePic;
     }
 
     public User() {
@@ -89,6 +85,14 @@ public class User {
 
     public void setSubmissionsApprovedOn(List<Submission> submissionsApprovedOn) {
         this.submissionsApprovedOn = submissionsApprovedOn;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
     }
 
     public void addSubmissionApprovedOn(Submission submission) {

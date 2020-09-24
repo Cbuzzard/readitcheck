@@ -46,8 +46,10 @@ public class LoginFilter implements Filter {
                 if (payload != null) {
                     String username = payload.getSubject();
                     String name = (String) payload.get("name");
+                    String picture = (String) payload.get("picture");
                     request.setAttribute("name", name);
                     request.setAttribute("userId", username);
+                    request.setAttribute("picture", picture);
                     AppTokenProvider.addAuthentication(response, username);
                     filterChain.doFilter(servletRequest, response);
                     return;

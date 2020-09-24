@@ -34,11 +34,12 @@ public class RestFilter implements Filter {
         Optional<String> userFromToken = getUserFromToken(request);
 
         if (((HttpServletRequest) servletRequest).getMethod().equals("GET")) {
+            userFromToken.ifPresent(s -> request.setAttribute("userId", s));
             filterChain.doFilter(request, servletResponse);
             return;
         }
 
-        if (!userFromToken.isPresent()) {
+        if (userFromToken.isEmpty()) {
             response.sendError(HttpStatus.UNAUTHORIZED.value());
             return;
         }

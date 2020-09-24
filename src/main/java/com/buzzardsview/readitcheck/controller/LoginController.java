@@ -20,9 +20,14 @@ public class LoginController {
 
         String userId = (String) request.getAttribute("userId");
         String name = (String) request.getAttribute("name");
+        String picture = (String) request.getAttribute("picture");
 
         if (!userRepository.findById(userId).isPresent()) {
-            userRepository.save(new User(userId, name));
+            userRepository.save(new User(userId, name, picture));
+        } else {
+            User user = userRepository.findById(userId).orElseThrow();
+            user.setPicture(picture);
+            userRepository.save(user);
         }
 
     }
