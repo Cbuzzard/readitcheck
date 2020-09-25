@@ -16,3 +16,11 @@
     margin-bottom: 16px;
     overflow-y: hidden;
 }
+
+.commentedon {
+    margin-bottom: 20px;
+}
+
+.commentstitle {
+    text-align: center;
+}

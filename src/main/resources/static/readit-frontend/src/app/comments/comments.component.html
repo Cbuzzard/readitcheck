@@ -1,25 +1,31 @@
-<mat-card class="card commentcontainer">
-
-    <h2>Comments</h2>
-    <mat-divider></mat-divider><br>
-
-    <div *ngIf="comments.length === 0" class="nocomments">
+<mat-card class="card" *ngIf="comments.length === 0">
+    <div  class="nocomments">
         <mat-icon>announcement</mat-icon>
-        <p> No comments yet. Be the first to comment.</p>
+        <p> No comments yet.</p>
     </div>
+</mat-card>
 
-    <div *ngIf="comments.length > 0">
-        <div *ngFor="let comment of comments" class="comment">
+<div *ngIf="comments.length > 0">
+    <mat-card *ngFor="let comment of comments" class="card commentcontainer">
+
+        <div  class="comment">
+            <div *ngIf="comment.submissionTitle" class="commentedon">
+                <p routerLink="/submission/{{comment.submissionId}}" class="commentedon clickable">
+                    commented on: {{shortenTitle(comment.submissionTitle)}}
+                </p>
+            </div>
             <h3 class="commentcontent">{{comment.content}}</h3><br>
+            <mat-divider></mat-divider><br>
             <div class="commentfooter">
                 <div>
+                    <app-delete-button [content]="{submissionId: comment.submissionId, userId: comment.user.id, commentId: comment.id}" (deleted)="onCommentDeleted($event)"></app-delete-button>
                     <p>posted by: </p>
                     <p routerLink="/user/{{comment.user.id}}" class="clickable profilelink">{{comment.user.username}}</p>
                 </div>
                 <p class="timestamp">{{getDateString(comment.timestamp)}}</p>
             </div>
-            <mat-divider></mat-divider><br>
         </div>
-    </div>
+    
+    </mat-card>
+</div>
 
-</mat-card>

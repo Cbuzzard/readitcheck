@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { SubmissionForList } from '../dto/submission-for-list'
+import { Submission } from '../dto/submission';
 import { RestService } from '../service/rest/rest.service';
 
 @Component({
@@ -10,17 +10,25 @@ import { RestService } from '../service/rest/rest.service';
 export class SimpleSubmissionComponent implements OnInit {
 
   @Input()
-  submission
+  submission: Submission;
   linkPreview: string
+  deleted: boolean
 
-  constructor(private rest: RestService) {
-  }
+
+  constructor(private rest: RestService) {}
 
   ngOnInit(): void {
     this.rest.getLinkPreview(this.submission.link).subscribe((res: any) => {
       this.linkPreview = res.image
-      console.log(res)
     })
+  }
+
+  getDateString(timestamp) {
+    return new Date(timestamp).toLocaleString()
+  }
+
+  onDeleted() {
+    this.deleted = true;
   }
 
 }

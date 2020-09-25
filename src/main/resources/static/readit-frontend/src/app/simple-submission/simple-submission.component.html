@@ -1,23 +1,24 @@
-<mat-card class="card">
+<mat-card class="card" *ngIf="!deleted">
     <div id="textcontainer">
         <div class="titlecontainer">
-            <h2 routerLink="submission/{{submission.id}}" class="title clickable">{{submission.title}}</h2>
+            <h2 routerLink="/submission/{{submission.id}}" class="title clickable">{{submission.title}}</h2>
+            <a class="link" href="{{submission.link}}">Article Link</a>            
+
         </div>
-        <a class="link" href="{{submission.link}}">{{submission.link}}</a>
-        <div class="footercontainer">
-            <div class="commentscontainer">
-                <button routerLink="submission/{{submission.id}}" class="comments clickable" mat-mini-fab color="basic">
-                    <mat-icon [inline]="true">comment</mat-icon>
-                </button>
-                <p routerLink="submission/{{submission.id}}" class="clickable">Comments</p>
+        
+        <div class="submissionfootercontainer">
+            <div>
+                <app-delete-button [content]="{submissionId: submission.id, userId: submission.user.id}" (deleted)="onDeleted()"></app-delete-button>
+                <div class="usercontainer">
+                    <p>Posted By: </p>
+                    <p routerLink="/user/{{submission.user.id}}" class="clickable profilelink">{{submission.user.username}}</p>
+                </div>
             </div>
-            <div class="usercontainer">
-                <p>posted by: </p>
-                <p routerLink="user/{{submission.user.id}}" class="clickable">{{submission.user.username}}</p>
-            </div>
+            <p class="timestamp">{{getDateString(submission.timestamp)}}</p>
         </div>
+
     </div>
-    <a href="{{submission.link}}">
-        <img src="{{linkPreview}}" alt="">
-    </a>
+        <a href="{{submission.link}}" style="height: fit-content;">
+            <img class="linkpreview clickable" src="{{linkPreview}}" alt="">
+        </a>
 </mat-card>
