@@ -30,6 +30,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import { QuestionComponent } from './question/question.component';
 import { CommentsComponent } from './comments/comments.component';
 import { NewCommentComponent } from './new-comment/new-comment.component';
+import {MatTabsModule} from '@angular/material/tabs';
+import { DeleteButtonComponent } from './delete-button/delete-button.component';
 
 
 //TODO organize imports
@@ -47,7 +49,8 @@ import { NewCommentComponent } from './new-comment/new-comment.component';
     UserComponent,
     QuestionComponent,
     CommentsComponent,
-    NewCommentComponent
+    NewCommentComponent,
+    DeleteButtonComponent
   ],
   imports: [
     BrowserModule,
@@ -68,7 +71,8 @@ import { NewCommentComponent } from './new-comment/new-comment.component';
     MatDividerModule,
     InfiniteScrollModule,
     MatSnackBarModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatTabsModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true}],
   bootstrap: [AppComponent]

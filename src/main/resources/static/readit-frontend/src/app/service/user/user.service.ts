@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, XhrFactory } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UrlService } from '../url/url.service';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +11,14 @@ export class UserService {
   gapiSetup: boolean = false;
   loginStatus: Subject<boolean> = new Subject<boolean>();
   authInstance: gapi.auth2.GoogleAuth;
+  userId;
 
   constructor(private http: HttpClient, private url: UrlService) {
     this.initGoogleAuth();
+    this.refreshStatus();
+  }
+
+  refreshStatus() {
     this.authenticate().then(res => this.loginStatus.next(JSON.stringify(res) === 'true'))
   }
 
@@ -23,7 +28,7 @@ export class UserService {
   }
 
   login() {
-    this.authInstance.signIn().then(user => {
+    return this.authInstance.signIn().then(user => {
       var xhr = new XMLHttpRequest();
       xhr.open('POST', `${this.url.backend}/login`);
       xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -31,7 +36,10 @@ export class UserService {
       xhr.send();
       xhr.onload = async () => {
         sessionStorage.setItem('token', xhr.getResponseHeader('Authorization'))
-        this.authenticate().then(res => this.loginStatus.next(JSON.stringify(res) === 'true'))
+        sessionStorage.setItem('userId', user.getId())
+        sessionStorage.setItem('userName', user.getBasicProfile().getName())
+        sessionStorage.setItem('userImg', user.getBasicProfile().getImageUrl())
+        window.location.reload();
       };
     })
   }
@@ -39,7 +47,8 @@ export class UserService {
   logout() {
     gapi.auth2.getAuthInstance().signOut().then(async () => {
       sessionStorage.clear();
-      await this.authenticate().then(res => this.loginStatus.next(JSON.stringify(res) === 'true'));
+      this.refreshStatus()
+      window.location.reload();
     })
   }
 
