@@ -1,5 +1,7 @@
 package com.buzzardsview.readitcheck.model;
 
+import com.buzzardsview.readitcheck.model.dto.comment.CommentForListDto;
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 
@@ -36,4 +38,26 @@ public class Comment extends Content {
     public void setSubmission(Submission submission) {
         this.submission = submission;
     }
+
+    public CommentForListDto getCommentForList() {
+        return new CommentForListDto(
+                this.getId(),
+                this.getContent(),
+                this.getTimestamp(),
+                this.getUser().getSimpleUser(),
+                this.getSubmission().getId()
+        );
+    }
+
+    public CommentForListDto getCommentForUserList() {
+        return new CommentForListDto(
+                this.getId(),
+                this.getContent(),
+                this.getTimestamp(),
+                this.getUser().getSimpleUser(),
+                this.getSubmission().getId(),
+                this.getSubmission().getTitle()
+        );
+    }
+
 }

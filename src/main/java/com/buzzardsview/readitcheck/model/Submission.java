@@ -1,5 +1,7 @@
 package com.buzzardsview.readitcheck.model;
 
+import com.buzzardsview.readitcheck.model.dto.submission.SubmissionForListDto;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -90,5 +92,15 @@ public class Submission extends Content {
 
     public void addApprovedUser(User user) {
         this.approvedUsers.add(user);
+    }
+
+    public SubmissionForListDto getSubmissionForList() {
+        return new SubmissionForListDto(
+                this.getId(),
+                this.getTitle(),
+                this.getLink(),
+                this.getTimestamp(),
+                this.getUser().getSimpleUser()
+        );
     }
 }
