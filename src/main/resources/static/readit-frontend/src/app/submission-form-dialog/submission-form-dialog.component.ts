@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { RestService } from "../service/rest/rest.service"
 import { SubmissionPost } from '../dto/submission-post'
-import { Question } from '../dto/question'
+import { QuestionPost } from '../dto/question-post'
+import { Router } from '@angular/router';
+import { MatDialogRef } from '@angular/material/dialog';
 
 
 @Component({
@@ -14,7 +16,7 @@ export class SubmissionFormDialogComponent implements OnInit {
 
   submissionForm;
 
-  constructor(private formBuilder: FormBuilder, private rest: RestService) {
+  constructor(private formBuilder: FormBuilder, private rest: RestService, private router: Router, public dialogRef: MatDialogRef<SubmissionFormDialogComponent>) {
     this.submissionForm = this.formBuilder.group({
       title: '',
       link: '',
@@ -27,12 +29,11 @@ export class SubmissionFormDialogComponent implements OnInit {
   }
 
   onSubmit(form) {
-    this.rest.postSubmission(new SubmissionPost(form.title, form.link, [new Question(form.question, form.answer)]))
+    this.rest.postSubmission(new SubmissionPost(form.title, form.link, new QuestionPost(form.question, form.answer)))
       .subscribe(res => {
-        console.log(JSON.stringify(res))
-
-    })
+        this.router.navigateByUrl(`/submission/${res}`)
+        this.dialogRef.close()
+      })
   }
-  
 
 }
