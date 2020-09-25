@@ -1,3 +1,28 @@
-<div *ngIf="submission">
-    <p>{{submission.title}}</p>
+<div class="container" *ngIf='submission'>
+
+    <mat-card class="card">
+        <a href="{{submission.link}}">
+            <img class="linkpreview" src="{{linkPreview}}" alt="">
+        </a>
+        <h2>{{submission.title}}</h2>
+        <a class="link" href="{{submission.link}}">Article Link</a>
+        <div class="submissionfootercontainer">
+            <div class="usercontainer">
+                <app-delete-button [content]="{submissionId: submission.id, userId: submission.user.id}" (deleted)="onDeleted()"></app-delete-button>
+                <p>posted by: </p>
+                <p routerLink="/user/{{submission.user.id}}" class="clickable profilelink">{{submission.user.username}}</p>
+            </div>
+            <p class="timestamp">{{getDateString(submission.timestamp)}}</p>
+        </div>
+    </mat-card>
+
+    <app-new-comment *ngIf="submission.currentUserApproved" [submission]='submission'></app-new-comment>
+
+    <app-question *ngIf="!loginStatus || !submission.currentUserApproved" [question]="submission.question" (questionAnswered)="questionAnswered($event)"></app-question>
+
+    <app-comments [comments]="submission.comments"></app-comments>
+
 </div>
+
+
+
