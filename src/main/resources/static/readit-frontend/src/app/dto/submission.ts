@@ -5,14 +5,14 @@ import { Comment } from './comment'
 export class Submission {
 
     constructor(
-        id: number,
-        user: UserSimple,
-        title: string,
-        link: string,
-        question: Question,
-        comments: Array<Comment>,
-        timestamp: number,
-        currentUserApproved: boolean
+        public id: number,
+        public user: UserSimple,
+        public title: string,
+        public link: string,
+        public question: Question,
+        public comments: Array<Comment>,
+        public timestamp: number,
+        public currentUserApproved: boolean
     ) {}
 
 }

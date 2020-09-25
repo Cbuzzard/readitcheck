@@ -1,8 +1,8 @@
 export class UserSimple {
     
     constructor(
-        id: string,
-        username: string
+        public id: string,
+        public username: string
     ) {}
 
 }

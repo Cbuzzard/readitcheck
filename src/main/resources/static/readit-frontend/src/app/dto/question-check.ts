@@ -1,8 +1,8 @@
 export class QuestionCheck {
 
     constructor(
-        id: number,
-        answer: string
+        public id: number,
+        public answer: string
     ) {}
 
 }

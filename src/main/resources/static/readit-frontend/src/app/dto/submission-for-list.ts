@@ -3,11 +3,11 @@ import { UserSimple } from './user-simple'
 export class SubmissionForList {
 
     constructor (
-        id: number,
-        title: string,
-        link: string,
-        timestamp: number,
-        user: UserSimple
+        public id: number,
+        public title: string,
+        public link: string,
+        public timestamp: number,
+        public user: UserSimple
     ) {}
 
 }
