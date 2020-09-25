@@ -1,0 +1,25 @@
+.profileimage {
+    display: block;
+    margin: auto;
+    height: 120px;
+    border-radius: 60px;
+}
+
+.username {
+    padding-top: 16px;
+    text-align: center;
+    font-size: 30px;
+}
+
+.contentcontainer mat-tab-header{
+    display: none;
+}
+
+.slidercontainer mat-tab-body {
+    display: none;
+}
+
+.nosubmissions {
+    display: flex;
+    justify-items: center;
+}

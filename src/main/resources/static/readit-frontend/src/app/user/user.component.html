@@ -1,1 +1,37 @@
-<p>user works!</p>
+<mat-card *ngIf="user" class="card">
+    <img class="profileimage" src="{{user.picture}}" alt="">
+    <h2 class="username">{{user.username}}</h2>
+    <div class="slidercontainer">
+        <mat-tab-group mat-align-tabs="center" (selectedTabChange)="tabChange($event)">
+            <mat-tab label="Submissions"></mat-tab>
+            <mat-tab label="Comments"></mat-tab>
+          </mat-tab-group>
+    </div>
+</mat-card>
+
+
+<div class="contentcontainer">
+    <mat-tab-group *ngIf="user" mat-align-tabs="center" dynamicHeight [(selectedIndex)]="selectedTab">
+        <mat-tab label="Submissions">
+            <div *ngIf="user.submissions.length > 0">
+                <div *ngFor="let submission of user.submissions">
+                    <app-simple-submission [submission]="submission"></app-simple-submission>
+                </div>
+            </div>
+            <div *ngIf="!user.submissions.length > 0">
+                <mat-card class="card">
+                    <h2>Submissions</h2>
+                    <mat-divider></mat-divider><br>
+    
+                    <div class="nosubmissions">
+                        <mat-icon>announcement</mat-icon>
+                        <p> No Submissions yet.</p>
+                    </div>
+                </mat-card>
+            </div>
+        </mat-tab>
+        <mat-tab label="Comments">
+            <app-comments [comments]="user.comments"></app-comments>
+        </mat-tab>
+    </mat-tab-group>    
+</div>
