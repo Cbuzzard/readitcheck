@@ -1,13 +1,3 @@
-#newsubmissioncard {
-    margin: 2% auto 0 auto;
-    width: 89%;
-    max-width: 600px;
-}
-
-#input {
-    width: 100%;
-}
-
 input {
     visibility: hidden;
 }
