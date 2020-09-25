@@ -1,1 +1,7 @@
 <app-new-submission></app-new-submission>
+<div infiniteScroll [infiniteScrollDistance]="1" (scrolled)="onScroll()">
+    <div *ngFor="let submission of submissions">
+        <app-simple-submission [submission]="submission"></app-simple-submission>
+    </div>
+</div>
+
