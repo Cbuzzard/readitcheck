@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Submission } from '../dto/submission';
 import { RestService } from '../service/rest/rest.service';
+import { Comment } from '../dto/comment'
 
 @Component({
   selector: 'app-new-comment',
@@ -14,9 +15,6 @@ export class NewCommentComponent implements OnInit {
 
   @Input()
   submission: Submission;
-
-  @Output()
-  commentMade = new EventEmitter<Submission>();
 
   commentContent;
   commentForm: FormGroup;
@@ -32,9 +30,9 @@ export class NewCommentComponent implements OnInit {
   }
 
   onCommentSubmit(form) {
-    this.rest.postComment(this.submission.id, form.content).subscribe(res => {
+    this.rest.postComment(this.submission.id, form.content).subscribe((res: Comment) => {
       if (res) {
-        this.submission.comments.push(res);
+        this.submission.comments.unshift(res);
         this.commentContent = ''
       };
     });
