@@ -7,7 +7,6 @@ import com.buzzardsview.readitcheck.model.Comment;
 import com.buzzardsview.readitcheck.model.Submission;
 import com.buzzardsview.readitcheck.model.User;
 import com.buzzardsview.readitcheck.model.dto.comment.CommentForListDto;
-import com.buzzardsview.readitcheck.model.dto.comment.CommentPostDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,6 +44,16 @@ public class CommentController {
         }
 
         return null;
+    }
+
+    @DeleteMapping("{commentId}")
+    public void deleteComment(@PathVariable Integer submissionId, @PathVariable Integer commentId, ServletRequest request) {
+        User user = userRepository.findById((String) request.getAttribute("userId")).orElseThrow();
+        Comment comment = commentRepository.findById(commentId).orElseThrow();
+
+        if (user == comment.getUser()) {
+            commentRepository.delete(comment);
+        }
     }
 
 }

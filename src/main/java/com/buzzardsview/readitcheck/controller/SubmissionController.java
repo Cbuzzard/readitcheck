@@ -3,6 +3,7 @@ package com.buzzardsview.readitcheck.controller;
 import com.buzzardsview.readitcheck.data.QuestionRepository;
 import com.buzzardsview.readitcheck.data.SubmissionRepository;
 import com.buzzardsview.readitcheck.data.UserRepository;
+import com.buzzardsview.readitcheck.model.Comment;
 import com.buzzardsview.readitcheck.model.Question;
 import com.buzzardsview.readitcheck.model.Submission;
 import com.buzzardsview.readitcheck.model.User;
@@ -10,6 +11,7 @@ import com.buzzardsview.readitcheck.model.dto.comment.CommentForListDto;
 import com.buzzardsview.readitcheck.model.dto.submission.SubmissionForListDto;
 import com.buzzardsview.readitcheck.model.dto.submission.SubmissionGetDto;
 import com.buzzardsview.readitcheck.model.dto.submission.SubmissionPostDto;
+import com.buzzardsview.readitcheck.model.exception.SubmissionNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -39,7 +41,8 @@ public class SubmissionController {
 
         User user = null;
 
-        Submission submission = submissionRepository.getById(id).orElseThrow();
+        Submission submission = submissionRepository.getById(id).orElseThrow(()->
+                new SubmissionNotFoundException("id-"));
         if ((request.getAttribute("userId")) != null) {
             user = userRepository.findById((String) request.getAttribute("userId")).orElseThrow();
         }
@@ -48,14 +51,8 @@ public class SubmissionController {
 
 
 
-        List<CommentForListDto> comments = submission.getComments().stream().map(c ->
-                new CommentForListDto(
-                        c.getId(),
-                        c.getContent(),
-                        c.getTimestamp(),
-                        c.getUser().getSimpleUser(),
-                        c.getSubmission().getId()
-                )
+        List<CommentForListDto> comments = submission.getComments().stream().map(
+                Comment::getCommentForList
         ).collect(Collectors.toList());
 
         Comparator<CommentForListDto> compareByTimeStamp = Comparator.comparing((CommentForListDto o) -> ((Long) o.getTimestamp())).reversed();
@@ -96,16 +93,21 @@ public class SubmissionController {
                                            @RequestParam(name = "size", defaultValue = "5") int size) {
 
         Page<Submission> submissionPage = submissionRepository.findAll(PageRequest.of(page, size, Sort.by("timestamp").descending()));
-        List<SubmissionForListDto> submissionsForListDto = submissionPage.getContent().stream().map(s ->
-                        new SubmissionForListDto(
-                                s.getId(),
-                                s.getTitle(),
-                                s.getLink(),
-                                s.getTimestamp(),
-                                s.getUser().getSimpleUser()
-                        )).collect(Collectors.toList());
+        List<SubmissionForListDto> submissionsForListDto = submissionPage.getContent().stream().map(
+                Submission::getSubmissionForList
+        ).collect(Collectors.toList());
 
         return submissionsForListDto;
     }
 
+    @DeleteMapping("{id}")
+    public void deleteSubmission(@PathVariable Integer id, ServletRequest request) {
+        User user = userRepository.findById((String) request.getAttribute("userId")).orElseThrow();
+        Submission submission = submissionRepository.getById(id).orElseThrow();
+
+        if(user == submission.getUser()) {
+            submissionRepository.delete(submission);
+        }
+
+    }
 }
