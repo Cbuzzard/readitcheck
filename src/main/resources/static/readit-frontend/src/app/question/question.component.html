@@ -1,4 +1,4 @@
-<mat-card class="card">
+<mat-card *ngIf="question" class="card">
     <form [formGroup]="questionForm" (ngSubmit)="onQuestionSubmit(questionForm.value)">
             <div class="questionheader">
                 <h3>{{question.question}}</h3>
