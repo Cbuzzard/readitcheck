@@ -1,9 +1,11 @@
-import { EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+import { EventEmitter, Input, ViewChild, ViewEncapsulation, NgZone } from '@angular/core';
+import {CdkTextareaAutosize} from '@angular/cdk/text-field';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Submission } from '../dto/submission';
 import { RestService } from '../service/rest/rest.service';
 import { Comment } from '../dto/comment'
+import {take} from 'rxjs/operators';
 
 @Component({
   selector: 'app-new-comment',
@@ -16,13 +18,14 @@ export class NewCommentComponent implements OnInit {
   @Input()
   submission: Submission;
 
+  @ViewChild('autosize') autosize: CdkTextareaAutosize;
+
   commentContent;
   commentForm: FormGroup;
-  commentError = "";
 
-  constructor(private rest: RestService, private formBuilder: FormBuilder) {
+  constructor(private rest: RestService, private formBuilder: FormBuilder, private _ngZone: NgZone) {
     this.commentForm = this.formBuilder.group({
-      content: ['', [Validators.required, Validators.maxLength(500)]]
+      content: ['', [Validators.required, Validators.maxLength(3000)]]
     })
   }
 
@@ -37,5 +40,16 @@ export class NewCommentComponent implements OnInit {
       };
     });
   } 
+
+  getErrorMessage() {
+    if (this.commentForm.get('content').hasError('required')) return "required"
+    if (this.commentForm.get('content').hasError('maxlength')) return "must be less than 3000 characters"
+  }
+
+  triggerResize() {
+
+    this._ngZone.onStable.pipe(take(1))
+        .subscribe(() => this.autosize.resizeToFitContent(true));
+  }
 
 }

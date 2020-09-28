@@ -19,7 +19,7 @@ export class SimpleSubmissionComponent implements OnInit {
 
   ngOnInit(): void {
     this.rest.getLinkPreview(this.submission.link).subscribe((res: any) => {
-      this.linkPreview = res.image
+      this.linkPreview = res ? res.image : ''
     })
   }
 

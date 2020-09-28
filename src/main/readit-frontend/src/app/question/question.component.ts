@@ -21,13 +21,13 @@ export class QuestionComponent implements OnInit {
   questionAnswered = new EventEmitter<boolean>();
 
   questionForm: FormGroup;
-  questionError;
+  wrongAnswer: boolean;
 
   loginStatus
 
   constructor(private formBuilder: FormBuilder, private _snackBar: MatSnackBar, private rest: RestService, private user: UserService) {
     this.questionForm = this.formBuilder.group({
-      answer: ['', [Validators.required, this.checkForError()]]
+      answer: ['', [Validators.required, Validators.maxLength(25), this.checkForError()]]
     })
   }
 
@@ -39,23 +39,28 @@ export class QuestionComponent implements OnInit {
   }
 
   onQuestionSubmit(form) {
-    if (this.questionForm.hasError('required')) {
-      this.questionError = 'Must enter a value'
-    } else {
-      this.rest.checkAnswer(this.question.id, form.answer).subscribe((res: boolean) => {
-        if (res) {
-          this.questionAnswered.emit(res);
-          this.openSnackBar("Success! You are now approved to comment.");
-        }
-        this.questionError = "Incorrect answer"
-        this.questionForm.controls['answer'].updateValueAndValidity()
-      })
-    }
+    this.rest.checkAnswer(this.question.id, form.answer).subscribe((res: boolean) => {
+      if (res) {
+        this.questionAnswered.emit(res);
+        this.openSnackBar("Success! You are now approved to comment.");
+      }
+      this.wrongAnswer = true;
+      this.questionForm.controls['answer'].updateValueAndValidity()
+    })
   }
 
   checkForError(): ValidatorFn {
     return (control: AbstractControl): {[key: string]: any} | null => {
-      return this.questionError ? {invalid: this.questionError} : null
+      return this.wrongAnswer ? {invalid: this.wrongAnswer} : null
+    }
+  }
+  
+  getErrorMessage() {
+    if (this.questionForm.get('answer').hasError('required')) return "required"
+    if (this.questionForm.get('answer').hasError('maxlength')) return "must be less than 25 characters" 
+    if (this.questionForm.get('answer').hasError('invalid')) {
+      this.wrongAnswer = false;
+      return "wrong answer"
     }
   }
 

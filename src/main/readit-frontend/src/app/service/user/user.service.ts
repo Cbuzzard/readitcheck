@@ -60,7 +60,7 @@ export class UserService {
   
       return pload.then(async () => {
         gapi.auth2
-          .init({ client_id: '53814632760-ijc3h4mhjnj8gc1mpmha8t2tl8bg9b2v.apps.googleusercontent.com' })
+          .init({ client_id: '53814632760-bb01hnpjut777v9cmkjh9fcimiud3r82.apps.googleusercontent.com' })
           .then(auth => {
             this.gapiSetup = true;
             this.authInstance = auth;

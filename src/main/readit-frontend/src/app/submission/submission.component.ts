@@ -4,6 +4,7 @@ import { RestService } from '../service/rest/rest.service';
 import { Submission } from '../dto/submission'
 import { UserService } from '../service/user/user.service';
 import { Comment } from '../dto/comment'
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -16,15 +17,16 @@ export class SubmissionComponent implements OnInit {
   submission: Submission;
   linkPreview: string;
   loginStatus: boolean;
+  userSubscription: Subscription;
 
   constructor(private route: ActivatedRoute, private router: Router, private rest: RestService, private user: UserService) {}
 
   ngOnInit(): void {
-    this.user.loginStatus.subscribe(res => {
+    this.userSubscription = this.user.loginStatus.subscribe(res => {
       this.loginStatus = res;
-      this.getSubmission()
     })
     this.user.refreshStatus();
+    this.getSubmission()
   }
 
   getSubmission() {
@@ -32,7 +34,7 @@ export class SubmissionComponent implements OnInit {
       this.rest.getSubmission(param.id).subscribe((res: Submission) => {
         this.submission = res
         this.rest.getLinkPreview(this.submission.link).subscribe((res: any) => {
-          this.linkPreview = res.image;
+          this.linkPreview = res ? res.image : ''
         })
       });
     })
@@ -48,6 +50,7 @@ export class SubmissionComponent implements OnInit {
   }
 
   onDeleted() {
+    this.userSubscription.unsubscribe();
     this.router.navigateByUrl('')
   }
 

@@ -6,21 +6,25 @@
 <mat-form-field class="input" appearance="outline">
     <mat-label>New Submission</mat-label>
     <input matInput placeholder="Title" formControlName="title">
+    <mat-error *ngIf="submissionForm.get('title').invalid">{{getErrorMessage('title')}}</mat-error>
 </mat-form-field>
 
 <mat-form-field class="input" appearance="outline">
     <mat-label>Link</mat-label>
     <input matInput placeholder="Link" formControlName="link">
+    <mat-error *ngIf="submissionForm.get('link').invalid">{{getErrorMessage('link')}}</mat-error>
 </mat-form-field>
 
 <mat-form-field class="input" appearance="outline">
     <mat-label>Question</mat-label>
     <input matInput placeholder="Question" formControlName="question">
+    <mat-error *ngIf="submissionForm.get('question').invalid">{{getErrorMessage('question')}}</mat-error>
 </mat-form-field>
 
 <mat-form-field class="input" appearance="outline">
     <mat-label>Answer</mat-label>
     <input matInput placeholder="Answer" formControlName="answer">
+    <mat-error *ngIf="submissionForm.get('answer').invalid">{{getErrorMessage('answer')}}</mat-error>
 </mat-form-field>
-<button id="submitbtn" mat-button type="submit">Submit</button>
+<button [disabled]="submissionForm.invalid" mat-button type="submit">Submit</button>
 </form>

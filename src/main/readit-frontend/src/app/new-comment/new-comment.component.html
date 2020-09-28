@@ -1,0 +1,19 @@
+<mat-card *ngIf="submission.currentUserApproved" class="card">
+    <mat-icon class="checkmark attentionicon" color="green" matTooltip="You are approved to comment!" matTooltipClass="tooltipgreen">check_circle</mat-icon>
+    <form [formGroup]="commentForm" (ngSubmit)="onCommentSubmit(commentForm.value)">
+        <mat-form-field class="input" appearance="outline">
+            <mat-label>New Comment</mat-label>
+            <!-- <input matInput placeholder="New Comment" formControlName="content" [value]="commentContent"> -->
+            <textarea matInput
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="3"
+            cdkAutosizeMaxRows="10"
+            formControlName="content"
+            [value]="commentContent"></textarea>
+            <mat-error *ngIf="commentForm.get('content').invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+        <button [disabled]="commentForm.invalid" class="submitbutton" mat-button type="submit">Post</button>
+
+    </form>
+</mat-card>

@@ -38,7 +38,7 @@ export class RestService {
   }
 
   postComment(submissionId, content) {
-    return this.http.post(`${this.url.backend}/rest/submission/${submissionId}/comment`, content, this.httpOptions);
+    return this.http.post(`${this.url.backend}/rest/submission/${submissionId}/comment`, {content: content}, this.httpOptions);
   }
 
   getUser(id: number) {
