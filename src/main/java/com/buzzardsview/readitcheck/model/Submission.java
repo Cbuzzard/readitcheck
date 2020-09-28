@@ -3,6 +3,9 @@ package com.buzzardsview.readitcheck.model;
 import com.buzzardsview.readitcheck.model.dto.submission.SubmissionForListDto;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @NamedEntityGraph(
@@ -21,9 +24,14 @@ import java.util.List;
 @Entity
 public class Submission extends Content {
 
+    @NotEmpty(message = "title cannot be empty")
+    @Size(max = 255)
     private String title;
+    @NotEmpty
+    @Size(max = 1000)
+    @Pattern(regexp = "https?:\\/\\/(www\\.)[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,4}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)", message = "Link needs to be in https://www format")
     private String link;
-    @OneToMany(mappedBy = "submission")
+    @OneToMany(mappedBy = "submission", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments;
     @OneToOne(mappedBy = "submission", cascade=CascadeType.ALL)
     private Question question;

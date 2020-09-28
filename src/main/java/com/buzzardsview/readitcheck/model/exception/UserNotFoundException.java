@@ -4,9 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
-public class SubmissionNotFoundException extends RuntimeException {
+public class UserNotFoundException extends RuntimeException {
 
-    public SubmissionNotFoundException(String exception) {
+    public UserNotFoundException(String exception) {
         super(exception);
     }
 

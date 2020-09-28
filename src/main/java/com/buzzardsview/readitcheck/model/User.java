@@ -9,9 +9,6 @@ import java.util.List;
 @Entity
 public class User {
 
-    //TODO figure out named entity graphs
-
-
     @Id
     @Size(max = 22)
     private String googleId;

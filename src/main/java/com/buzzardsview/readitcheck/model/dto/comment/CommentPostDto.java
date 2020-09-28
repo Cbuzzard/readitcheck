@@ -1,15 +1,16 @@
 package com.buzzardsview.readitcheck.model.dto.comment;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 public class CommentPostDto {
 
-    //TODO maybe remove submissionId since it will be url param
-
+    @NotEmpty
+    @Size(max = 3000)
     private String content;
-    private int submissionId;
 
     public CommentPostDto(String content, int submissionId) {
         this.content = content;
-        this.submissionId = submissionId;
     }
 
     public String getContent() {
@@ -20,11 +21,4 @@ public class CommentPostDto {
         this.content = content;
     }
 
-    public int getSubmissionId() {
-        return submissionId;
-    }
-
-    public void setSubmissionId(int submissionId) {
-        this.submissionId = submissionId;
-    }
 }

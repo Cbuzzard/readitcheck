@@ -4,6 +4,8 @@ import com.buzzardsview.readitcheck.model.dto.question.QuestionGetDto;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Question {
@@ -11,7 +13,11 @@ public class Question {
     @Id
     @GeneratedValue
     private int id;
+    @NotEmpty
+    @Size(max = 255)
     private String question;
+    @NotEmpty(message = "must not be empty")
+    @Size(max = 25)
     private String answer;
     @OneToOne
     @JoinColumn(name = "submission_id")

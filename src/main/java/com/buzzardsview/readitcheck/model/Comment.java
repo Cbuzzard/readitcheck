@@ -3,12 +3,14 @@ package com.buzzardsview.readitcheck.model;
 import com.buzzardsview.readitcheck.model.dto.comment.CommentForListDto;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 @Entity
 public class Comment extends Content {
 
-    @Size(max = 500)
+    @NotEmpty
+    @Size(max = 3000)
     private String content;
     @ManyToOne
     @JoinColumn(name = "submission_id")
