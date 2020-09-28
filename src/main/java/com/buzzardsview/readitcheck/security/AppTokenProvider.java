@@ -49,7 +49,6 @@ public class AppTokenProvider {
                 return Optional.of(body.getSubject());
 
             } catch (SignatureException e) {
-                // invalid signature
             }
         }
         return Optional.empty();
