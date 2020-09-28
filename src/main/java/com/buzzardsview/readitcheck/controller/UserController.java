@@ -7,6 +7,7 @@ import com.buzzardsview.readitcheck.model.User;
 import com.buzzardsview.readitcheck.model.dto.comment.CommentForListDto;
 import com.buzzardsview.readitcheck.model.dto.submission.SubmissionForListDto;
 import com.buzzardsview.readitcheck.model.dto.user.UserGetDto;
+import com.buzzardsview.readitcheck.model.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,14 +22,13 @@ import java.util.stream.Collectors;
 @RequestMapping("rest/user")
 public class UserController {
 
-    //TODO custom User not found exception
-
     @Autowired
     private UserRepository userRepository;
 
     @GetMapping("/{id}")
     public UserGetDto getOne(@PathVariable String id) {
-        User user = userRepository.getByGoogleId(id).orElseThrow();
+        User user = userRepository.getByGoogleId(id).orElseThrow(() ->
+                new UserNotFoundException("user not found id-"+id));
 
         List<CommentForListDto> comments = user.getComments().stream().map(Comment::getCommentForUserList)
                 .collect(Collectors.toList());

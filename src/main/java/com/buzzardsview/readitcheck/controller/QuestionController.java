@@ -6,7 +6,6 @@ import com.buzzardsview.readitcheck.data.UserRepository;
 import com.buzzardsview.readitcheck.model.Question;
 import com.buzzardsview.readitcheck.model.Submission;
 import com.buzzardsview.readitcheck.model.User;
-import com.buzzardsview.readitcheck.model.dto.question.QuestionCheckDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,8 +15,6 @@ import javax.servlet.ServletRequest;
 @RestController
 @RequestMapping("rest/question")
 public class QuestionController {
-
-    //TODO custom question not found exception
 
     @Autowired
     private QuestionRepository questionRepository;

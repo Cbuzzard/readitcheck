@@ -19,6 +19,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletRequest;
+import javax.validation.Valid;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,8 +27,6 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("rest/submission")
 public class SubmissionController {
-
-    //TODO custom submission not found exception
 
     @Autowired
     private SubmissionRepository submissionRepository;
@@ -41,8 +40,9 @@ public class SubmissionController {
 
         User user = null;
 
-        Submission submission = submissionRepository.getById(id).orElseThrow(()->
-                new SubmissionNotFoundException("id-"));
+        Submission submission = submissionRepository.getById(id).orElseThrow(() ->
+                new SubmissionNotFoundException("submission not found id-"+id));
+
         if ((request.getAttribute("userId")) != null) {
             user = userRepository.findById((String) request.getAttribute("userId")).orElseThrow();
         }
@@ -72,7 +72,8 @@ public class SubmissionController {
     }
 
     @PostMapping
-    public Integer newSubmission(@RequestBody SubmissionPostDto submissionPostDto, ServletRequest request) {
+    public Integer newSubmission(@RequestBody @Valid SubmissionPostDto submissionPostDto, ServletRequest request) {
+
 
         User user = userRepository.findById((String) request.getAttribute("userId")).orElseThrow();
         Submission newSubmission = new Submission(user, submissionPostDto.getTitle(), submissionPostDto.getLink());
@@ -106,6 +107,8 @@ public class SubmissionController {
         Submission submission = submissionRepository.getById(id).orElseThrow();
 
         if(user == submission.getUser()) {
+            submission.getApprovedUsers().remove(user);
+            submission.getComments().clear();
             submissionRepository.delete(submission);
         }
 

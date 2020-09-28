@@ -7,16 +7,16 @@ import com.buzzardsview.readitcheck.model.Comment;
 import com.buzzardsview.readitcheck.model.Submission;
 import com.buzzardsview.readitcheck.model.User;
 import com.buzzardsview.readitcheck.model.dto.comment.CommentForListDto;
+import com.buzzardsview.readitcheck.model.dto.comment.CommentPostDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletRequest;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("rest/submission/{submissionId}/comment")
 public class CommentController {
-
-    //TODO add custom submission not found exception
 
     @Autowired
     private CommentRepository commentRepository;
@@ -26,12 +26,12 @@ public class CommentController {
     private UserRepository userRepository;
 
     @PostMapping
-    public CommentForListDto newComment(@RequestBody String content, @PathVariable Integer submissionId, ServletRequest request) {
+    public CommentForListDto newComment(@RequestBody @Valid CommentPostDto commentPostDto, @PathVariable Integer submissionId, ServletRequest request) {
         Submission submission = submissionRepository.getById(submissionId).orElseThrow();
         User user = userRepository.findById((String) request.getAttribute("userId")).orElseThrow();
 
         if (submission.getApprovedUsers().contains(user)) {
-            Comment newComment = new Comment(user, content, submission);
+            Comment newComment = new Comment(user, commentPostDto.getContent(), submission);
             submission.addComment(newComment);
             commentRepository.save(newComment);
             submissionRepository.save(submission);
