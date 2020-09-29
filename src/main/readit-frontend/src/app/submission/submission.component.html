@@ -2,7 +2,7 @@
 
     <mat-card class="card">
         <a href="{{submission.link}}">
-            <img class="linkpreview" src="{{linkPreview}}" alt="">
+            <img class="linkpreview" src="{{submission.linkPreview}}" alt="">
         </a>
         <h2>{{submission.title}}</h2>
         <a class="link" href="{{submission.link}}">Article Link</a>
@@ -16,13 +16,10 @@
         </div>
     </mat-card>
 
-    <app-new-comment *ngIf="submission.currentUserApproved" [submission]='submission'></app-new-comment>
+    <app-new-comment *ngIf="submission.currentUserApproved" [submission]='submission' (inserted)="commentMade($event)"></app-new-comment>
 
     <app-question *ngIf="!loginStatus || !submission.currentUserApproved" [question]="submission.question" (questionAnswered)="questionAnswered($event)"></app-question>
 
-    <app-comments [comments]="submission.comments"></app-comments>
+    <app-comments [comments]="submission.comments"  (deleted)=commentDeleted($event)></app-comments>
 
 </div>
-
-
-

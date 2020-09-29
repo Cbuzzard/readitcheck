@@ -15,7 +15,6 @@ import { Subscription } from 'rxjs';
 export class SubmissionComponent implements OnInit {
 
   submission: Submission;
-  linkPreview: string;
   loginStatus: boolean;
   userSubscription: Subscription;
 
@@ -33,9 +32,7 @@ export class SubmissionComponent implements OnInit {
     this.route.params.subscribe(param => {
       this.rest.getSubmission(param.id).subscribe((res: Submission) => {
         this.submission = res
-        this.rest.getLinkPreview(this.submission.link).subscribe((res: any) => {
-          this.linkPreview = res ? res.image : ''
-        })
+        console.log(this.submission)
       });
     })
   }
@@ -54,6 +51,14 @@ export class SubmissionComponent implements OnInit {
     this.router.navigateByUrl('')
   }
 
-  
+  commentMade(res) {
+    this.submission.comments.unshift(res)
+  }
+
+  commentDeleted(res) {
+    this.submission.comments = this.submission.comments.filter((value, index, arr) => {
+      return value.id != res;
+    })
+  }
 
 }
