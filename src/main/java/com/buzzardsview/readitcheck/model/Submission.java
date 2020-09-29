@@ -1,26 +1,20 @@
 package com.buzzardsview.readitcheck.model;
 
 import com.buzzardsview.readitcheck.model.dto.submission.SubmissionForListDto;
+import com.google.common.net.InternetDomainName;
+import org.apache.commons.lang3.StringUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 
-@NamedEntityGraph(
-        name = "submission-entity-graph",
-        attributeNodes = {
-                @NamedAttributeNode(value = "user", subgraph = "user-subgraph"),
-                @NamedAttributeNode("title")
-        },
-        subclassSubgraphs = {
-                @NamedSubgraph(
-                        name = "user-subgraph",
-                        attributeNodes = {@NamedAttributeNode("googleId")}
-                )
-        }
-)
 @Entity
 public class Submission extends Content {
 
@@ -37,6 +31,7 @@ public class Submission extends Content {
     private Question question;
     @ManyToMany(mappedBy = "submissionsApprovedOn")
     private List<User> approvedUsers;
+    private String linkPreview;
 
     public Submission() {
     }
@@ -46,12 +41,22 @@ public class Submission extends Content {
         this.title = title;
         this.link = link;
         this.question = question;
+        try {
+            this.linkPreview = extractLinkPreviewInfo(this.link);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public Submission(User user, String title, String link) {
         super(user);
         this.title = title;
         this.link = link;
+        try {
+            this.linkPreview = extractLinkPreviewInfo(this.link);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getTitle() {
@@ -102,13 +107,38 @@ public class Submission extends Content {
         this.approvedUsers.add(user);
     }
 
+    public String getLinkPreview() {
+        return linkPreview;
+    }
+
+    public void setLinkPreview(String linkPreview) {
+        this.linkPreview = linkPreview;
+    }
+
     public SubmissionForListDto getSubmissionForList() {
         return new SubmissionForListDto(
                 this.getId(),
                 this.getTitle(),
                 this.getLink(),
                 this.getTimestamp(),
-                this.getUser().getSimpleUser()
+                this.getUser().getSimpleUser(),
+                this.linkPreview
         );
+    }
+
+    private String extractLinkPreviewInfo(String url) throws IOException {
+        if (!url.startsWith("http")) {
+            url = "https://" + url;
+        }
+        Document document = Jsoup.connect(url).get();
+        return getMetaTagContent(document, "meta[property=og:image]");
+    }
+
+    private String getMetaTagContent(Document document, String cssQuery) {
+        Element elm = document.select(cssQuery).first();
+        if (elm != null) {
+            return elm.attr("content");
+        }
+        return "";
     }
 }

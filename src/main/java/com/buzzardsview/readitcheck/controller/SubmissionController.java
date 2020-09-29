@@ -67,7 +67,8 @@ public class SubmissionController {
                 submission.getQuestion().getQuestionGet(),
                 comments,
                 submission.getTimestamp(),
-                currentUserApproved
+                currentUserApproved,
+                submission.getLinkPreview()
         );
     }
 
@@ -94,11 +95,10 @@ public class SubmissionController {
                                            @RequestParam(name = "size", defaultValue = "5") int size) {
 
         Page<Submission> submissionPage = submissionRepository.findAll(PageRequest.of(page, size, Sort.by("timestamp").descending()));
-        List<SubmissionForListDto> submissionsForListDto = submissionPage.getContent().stream().map(
+
+        return submissionPage.getContent().stream().map(
                 Submission::getSubmissionForList
         ).collect(Collectors.toList());
-
-        return submissionsForListDto;
     }
 
     @DeleteMapping("{id}")

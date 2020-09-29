@@ -9,13 +9,15 @@ public class SubmissionForListDto {
     private String link;
     private long timestamp;
     private UserSimpleDto user;
+    private String linkPreview;
 
-    public SubmissionForListDto(int id, String title, String link, long timestamp, UserSimpleDto user) {
+    public SubmissionForListDto(int id, String title, String link, long timestamp, UserSimpleDto user, String linkPreview) {
         this.id = id;
         this.title = title;
         this.link = link;
         this.timestamp = timestamp;
         this.user = user;
+        this.linkPreview = linkPreview;
     }
 
     public SubmissionForListDto() {
@@ -59,5 +61,13 @@ public class SubmissionForListDto {
 
     public void setUser(UserSimpleDto user) {
         this.user = user;
+    }
+
+    public String getLinkPreview() {
+        return linkPreview;
+    }
+
+    public void setLinkPreview(String linkPreview) {
+        this.linkPreview = linkPreview;
     }
 }

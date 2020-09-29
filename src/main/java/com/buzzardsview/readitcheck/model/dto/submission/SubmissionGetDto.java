@@ -16,8 +16,9 @@ public class SubmissionGetDto {
     private List<CommentForListDto> comments;
     private long timestamp;
     private boolean currentUserApproved;
+    private String linkPreview;
 
-    public SubmissionGetDto(int id, UserSimpleDto user, String title, String link, QuestionGetDto question, List<CommentForListDto> comments, long timestamp, boolean currentUserApproved) {
+    public SubmissionGetDto(int id, UserSimpleDto user, String title, String link, QuestionGetDto question, List<CommentForListDto> comments, long timestamp, boolean currentUserApproved, String linkPreview) {
         this.id = id;
         this.user = user;
         this.title = title;
@@ -26,6 +27,7 @@ public class SubmissionGetDto {
         this.comments = comments;
         this.timestamp = timestamp;
         this.currentUserApproved = currentUserApproved;
+        this.linkPreview = linkPreview;
     }
 
     public int getId() {
@@ -90,5 +92,13 @@ public class SubmissionGetDto {
 
     public void setCurrentUserApproved(boolean currentUserApproved) {
         this.currentUserApproved = currentUserApproved;
+    }
+
+    public String getLinkPreview() {
+        return linkPreview;
+    }
+
+    public void setLinkPreview(String linkPreview) {
+        this.linkPreview = linkPreview;
     }
 }
