@@ -69,7 +69,7 @@ export class QuestionComponent implements OnInit {
   }
 
   login() {
-    this.user.login().then(es => window.location.reload());
+    this.user.login();
   }
 
 }
