@@ -29,10 +29,6 @@ export class RestService {
     return this.http.get(`${this.url.backend}/rest/submission?page=${page}`);
   }
 
-  getLinkPreview(url: string) {
-    return this.http.get(`${this.url.backend}/rest/link?url=${url}`);
-  }
-
   checkAnswer(id: number, answer: string) {
     return this.http.post(`${this.url.backend}/rest/question/${id}`, answer, this.httpOptions);
   }

@@ -7,5 +7,7 @@ export class UrlService {
 
   constructor() { }
 
-  backend: string = "http://localhost:8080"
+  //prod
+  backend: string = ""
+  // backend: string = "http://localhost:8080"
 }
