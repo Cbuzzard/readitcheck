@@ -8,7 +8,6 @@ import java.util.Optional;
 
 public interface SubmissionRepository extends JpaRepository<Submission, Integer> {
 
-    @EntityGraph("submission-entity-graph")
     Optional<Submission> getById(Integer id);
 
 }
