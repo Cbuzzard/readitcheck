@@ -7,7 +7,8 @@ export class SubmissionForList {
         public title: string,
         public link: string,
         public timestamp: number,
-        public user: UserSimple
+        public user: UserSimple,
+        public linkPreview: string
     ) {}
 
 }

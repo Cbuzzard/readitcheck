@@ -18,9 +18,6 @@ export class SimpleSubmissionComponent implements OnInit {
   constructor(private rest: RestService) {}
 
   ngOnInit(): void {
-    this.rest.getLinkPreview(this.submission.link).subscribe((res: any) => {
-      this.linkPreview = res ? res.image : ''
-    })
   }
 
   getDateString(timestamp) {
