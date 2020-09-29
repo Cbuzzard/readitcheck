@@ -20,7 +20,7 @@ export class SubmissionFormDialogComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private rest: RestService, private router: Router, public dialogRef: MatDialogRef<SubmissionFormDialogComponent>) {
     this.submissionForm = this.formBuilder.group({
       title: ['', [Validators.required, Validators.maxLength(255)]],
-      link: ['', [Validators.required, Validators.maxLength(100), Validators.pattern(this.linkReg)]],
+      link: ['', [Validators.required, Validators.maxLength(1000), Validators.pattern(this.linkReg)]],
       question: ['', [Validators.required, Validators.maxLength(255)]],
       answer: ['', [Validators.required, Validators.maxLength(25)]]
     })
