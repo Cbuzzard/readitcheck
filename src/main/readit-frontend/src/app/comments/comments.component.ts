@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-comments',
@@ -9,6 +9,9 @@ export class CommentsComponent implements OnInit {
 
   @Input()
   comments = [];
+
+  @Output()
+  deleted = new EventEmitter<Comment>()
 
   constructor() { }
 
@@ -24,9 +27,8 @@ export class CommentsComponent implements OnInit {
   }
 
   onCommentDeleted(res) {
-    this.comments = this.comments.filter((value, index, arr) => {
-      return value.id != res;
-    })
+    this.deleted.emit(res)
   }
+
 
 }

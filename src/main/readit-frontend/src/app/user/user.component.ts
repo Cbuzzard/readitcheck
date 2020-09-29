@@ -31,4 +31,10 @@ export class UserComponent implements OnInit {
     this.selectedTab = tab.index;
   }
 
+  commentDeleted(res) {
+    this.user.comments = this.user.comments.filter((value, index, arr) => {
+      return value.id != res;
+    })
+  }
+
 }

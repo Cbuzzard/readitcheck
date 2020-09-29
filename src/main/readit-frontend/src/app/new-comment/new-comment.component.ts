@@ -1,4 +1,4 @@
-import { EventEmitter, Input, ViewChild, ViewEncapsulation, NgZone } from '@angular/core';
+import { EventEmitter, Input, ViewChild, ViewEncapsulation, NgZone, Output } from '@angular/core';
 import {CdkTextareaAutosize} from '@angular/cdk/text-field';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -18,6 +18,9 @@ export class NewCommentComponent implements OnInit {
   @Input()
   submission: Submission;
 
+  @Output()
+  inserted = new EventEmitter<Comment>()
+
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
   commentContent;
@@ -25,7 +28,7 @@ export class NewCommentComponent implements OnInit {
 
   constructor(private rest: RestService, private formBuilder: FormBuilder, private _ngZone: NgZone) {
     this.commentForm = this.formBuilder.group({
-      content: ['', [Validators.required, Validators.maxLength(3000)]]
+      content: ['', [Validators.maxLength(3000)]]
     })
   }
 
@@ -35,8 +38,8 @@ export class NewCommentComponent implements OnInit {
   onCommentSubmit(form) {
     this.rest.postComment(this.submission.id, form.content).subscribe((res: Comment) => {
       if (res) {
-        this.submission.comments.unshift(res);
-        this.commentContent = ''
+        this.inserted.emit(res)
+        this.commentForm.get('content').setValue('')
       };
     });
   } 
@@ -47,9 +50,8 @@ export class NewCommentComponent implements OnInit {
   }
 
   triggerResize() {
-
     this._ngZone.onStable.pipe(take(1))
-        .subscribe(() => this.autosize.resizeToFitContent(true));
+      .subscribe(() => this.autosize.resizeToFitContent(true));
   }
 
 }

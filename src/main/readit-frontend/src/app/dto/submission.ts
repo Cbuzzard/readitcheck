@@ -12,7 +12,8 @@ export class Submission {
         public question: Question,
         public comments: Array<Comment>,
         public timestamp: number,
-        public currentUserApproved: boolean
+        public currentUserApproved: boolean,
+        public linkPreview: string
     ) {}
 
 }
