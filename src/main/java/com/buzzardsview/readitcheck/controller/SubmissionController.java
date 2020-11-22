@@ -76,6 +76,7 @@ public class SubmissionController {
     public Integer newSubmission(@RequestBody @Valid SubmissionPostDto submissionPostDto, ServletRequest request) {
 
 
+        //TODO replace incorrect error handling
         User user = userRepository.findById((String) request.getAttribute("userId")).orElseThrow();
         Submission newSubmission = new Submission(user, submissionPostDto.getTitle(), submissionPostDto.getLink());
 
