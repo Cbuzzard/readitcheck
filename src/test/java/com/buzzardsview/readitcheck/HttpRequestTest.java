@@ -20,9 +20,23 @@ public class HttpRequestTest {
     private TestRestTemplate restTemplate;
 
     @Test
-    public void homeShouldReturn() throws Exception {
+    public void homeShouldReturnIndex() throws Exception {
         System.out.println(this.restTemplate.getForObject("http://localhost:" + port + "/", String.class));
         assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/",
+                String.class)).contains("ReadItCheck");
+    }
+
+    @Test
+    public void userShouldReturnIndex() throws Exception {
+        System.out.println(this.restTemplate.getForObject("http://localhost:" + port + "/", String.class));
+        assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/user/1",
+                String.class)).contains("ReadItCheck");
+    }
+
+    @Test
+    public void submissionShouldReturnIndex() throws Exception {
+        System.out.println(this.restTemplate.getForObject("http://localhost:" + port + "/", String.class));
+        assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/submission/1",
                 String.class)).contains("ReadItCheck");
     }
 }
