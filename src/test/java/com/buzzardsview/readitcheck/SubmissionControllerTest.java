@@ -6,6 +6,7 @@ import com.buzzardsview.readitcheck.data.UserRepository;
 import com.buzzardsview.readitcheck.model.Question;
 import com.buzzardsview.readitcheck.model.Submission;
 import com.buzzardsview.readitcheck.model.User;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -45,6 +46,8 @@ public class SubmissionControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    ObjectMapper mapper = new ObjectMapper();
+
     private static User testUser;
     private static Submission testSubmission;
 
@@ -65,11 +68,29 @@ public class SubmissionControllerTest {
         submissionRepository.save(testSubmission);
     }
 
+    // (get) /rest/submission/{id}  check returns specific submission
+
+    // (get) /rest/submission/{id}  check it doesn't return specific submission
+
+    // (post) /rest/submission check it creates submission and returns id
+
+    // (post) /rest/submission check incorrect submissionDto
+
     @Test
     public void findAllReturnsOneSubmission() throws Exception {
-        when(submissionRepository.findAll(PageRequest.of(0, 5, Sort.by("timestamp").descending()))).thenReturn(new PageImpl<>(Arrays.asList(testSubmission)));
-        mockMvc.perform(get("/rest/submission").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)));
+        when(submissionRepository.findAll(PageRequest.of(0, 5, Sort.by("timestamp").descending())))
+                .thenReturn(new PageImpl<>(Arrays.asList(testSubmission)));
+        mockMvc.perform(get("/rest/submission")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].title").value(testSubmission.getTitle()));
     }
+
+    // (get) /rest/submission check paging somehow
+
+    // (delete) /rest/submission/{id} check if user is same as associated submission status ok
+
+    // (delete) /rest/submission/{id} check if user is not same as associated submission status ok
 
 }
