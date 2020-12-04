@@ -11,7 +11,9 @@ import com.buzzardsview.readitcheck.model.dto.comment.CommentForListDto;
 import com.buzzardsview.readitcheck.model.dto.submission.SubmissionForListDto;
 import com.buzzardsview.readitcheck.model.dto.submission.SubmissionGetDto;
 import com.buzzardsview.readitcheck.model.dto.submission.SubmissionPostDto;
+import com.buzzardsview.readitcheck.model.exception.ForbiddenException;
 import com.buzzardsview.readitcheck.model.exception.SubmissionNotFoundException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -49,8 +51,6 @@ public class SubmissionController {
 
         boolean currentUserApproved = user != null && submission.getApprovedUsers().contains(user);
 
-
-
         List<CommentForListDto> comments = submission.getComments().stream().map(
                 Comment::getCommentForList
         ).collect(Collectors.toList());
@@ -74,7 +74,6 @@ public class SubmissionController {
 
     @PostMapping
     public Integer newSubmission(@RequestBody @Valid SubmissionPostDto submissionPostDto, ServletRequest request) {
-
 
         //TODO replace incorrect error handling
         User user = userRepository.findById((String) request.getAttribute("userId")).orElseThrow();
@@ -111,6 +110,8 @@ public class SubmissionController {
             submission.getApprovedUsers().remove(user);
             submission.getComments().clear();
             submissionRepository.delete(submission);
+        } else {
+            throw new ForbiddenException();
         }
 
     }
