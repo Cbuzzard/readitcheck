@@ -1,4 +1,4 @@
-package com.buzzardsview.readitcheck;
+package com.buzzardsview.readitcheck.controller;
 
 import com.buzzardsview.readitcheck.data.QuestionRepository;
 import com.buzzardsview.readitcheck.data.SubmissionRepository;
