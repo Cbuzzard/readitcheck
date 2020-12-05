@@ -8,6 +8,9 @@ import com.buzzardsview.readitcheck.model.Submission;
 import com.buzzardsview.readitcheck.model.User;
 import com.buzzardsview.readitcheck.model.dto.comment.CommentForListDto;
 import com.buzzardsview.readitcheck.model.dto.comment.CommentPostDto;
+import com.buzzardsview.readitcheck.model.exception.CommentNotFoundException;
+import com.buzzardsview.readitcheck.model.exception.ForbiddenException;
+import com.buzzardsview.readitcheck.model.exception.SubmissionNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +30,8 @@ public class CommentController {
 
     @PostMapping
     public CommentForListDto newComment(@RequestBody @Valid CommentPostDto commentPostDto, @PathVariable Integer submissionId, ServletRequest request) {
-        Submission submission = submissionRepository.getById(submissionId).orElseThrow();
+        Submission submission = submissionRepository.getById(submissionId).orElseThrow(() ->
+                new SubmissionNotFoundException("submission not found id-"+submissionId));
         User user = userRepository.findById((String) request.getAttribute("userId")).orElseThrow();
 
         if (submission.getApprovedUsers().contains(user)) {
@@ -41,15 +45,16 @@ public class CommentController {
                     newComment.getUser().getSimpleUser(),
                     newComment.getSubmission().getId()
             );
+        } else {
+            throw new ForbiddenException();
         }
-
-        return null;
     }
 
     @DeleteMapping("{commentId}")
     public void deleteComment(@PathVariable Integer submissionId, @PathVariable Integer commentId, ServletRequest request) {
         User user = userRepository.findById((String) request.getAttribute("userId")).orElseThrow();
-        Comment comment = commentRepository.findById(commentId).orElseThrow();
+        Comment comment = commentRepository.findById(commentId).orElseThrow(() ->
+                new CommentNotFoundException("comment not found id-"+commentId));
 
         if (user == comment.getUser()) {
             commentRepository.delete(comment);
