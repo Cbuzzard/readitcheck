@@ -4,6 +4,7 @@ import com.buzzardsview.readitcheck.model.dto.user.UserSimpleDto;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,11 +17,11 @@ public class User {
     private String username;
     private String picture;
     @OneToMany(mappedBy = "user")
-    private List<Comment> comments;
+    private List<Comment> comments = new ArrayList<>();
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    private List<Submission> submissions;
+    private List<Submission> submissions = new ArrayList<>();
     @ManyToMany
-    private List<Submission> submissionsApprovedOn;
+    private List<Submission> submissionsApprovedOn= new ArrayList<>();
 
     public User(String googleId, String name, String profilePic) {
         this.googleId = googleId;

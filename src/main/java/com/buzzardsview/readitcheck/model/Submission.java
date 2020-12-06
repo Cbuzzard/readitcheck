@@ -13,6 +13,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -26,11 +27,11 @@ public class Submission extends Content {
     @Pattern(regexp = "https?:\\/\\/(www\\.)[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,4}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)", message = "Link needs to be in https://www format")
     private String link;
     @OneToMany(mappedBy = "submission", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Comment> comments;
+    private List<Comment> comments = new ArrayList<>();
     @OneToOne(mappedBy = "submission", cascade=CascadeType.ALL)
     private Question question;
     @ManyToMany(mappedBy = "submissionsApprovedOn")
-    private List<User> approvedUsers;
+    private List<User> approvedUsers = new ArrayList<>();
     private String linkPreview;
 
     public Submission() {
