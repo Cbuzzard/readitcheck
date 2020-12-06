@@ -52,7 +52,7 @@ public class SubmissionControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    ObjectMapper mapper = new ObjectMapper();
+    private ObjectMapper mapper = new ObjectMapper();
 
     private static User testUser;
     private static Submission testSubmission;
