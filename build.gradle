@@ -24,7 +24,7 @@ dependencies {
 	implementation 'com.google.api-client:google-api-client:1.30.10'
 	implementation 'org.apache.commons:commons-lang3:3.11'
 	implementation 'org.jsoup:jsoup:1.13.1'
-	runtimeOnly 'com.h2database:h2'
+	runtimeOnly 'com.h2database:h2:1.4.191'
 	runtimeOnly 'mysql:mysql-connector-java'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
