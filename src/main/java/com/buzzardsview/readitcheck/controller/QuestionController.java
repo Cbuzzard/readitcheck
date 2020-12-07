@@ -27,7 +27,8 @@ public class QuestionController {
     public boolean checkAnswer(@RequestBody String answer, @PathVariable Integer id, ServletRequest request) {
 
         Question question = questionRepository.findById(id).orElseThrow();
-        Submission submission = submissionRepository.getById(question.getSubmission().getId()).orElseThrow();
+//        Submission submission = submissionRepository.getById(question.getSubmission().getId()).orElseThrow();
+        Submission submission = question.getSubmission();
 
         boolean answeredCorrectly = question.checkAnswer(answer);
 
