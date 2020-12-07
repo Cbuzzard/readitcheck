@@ -13,7 +13,6 @@ import com.buzzardsview.readitcheck.model.dto.submission.SubmissionGetDto;
 import com.buzzardsview.readitcheck.model.dto.submission.SubmissionPostDto;
 import com.buzzardsview.readitcheck.model.exception.ForbiddenException;
 import com.buzzardsview.readitcheck.model.exception.SubmissionNotFoundException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
