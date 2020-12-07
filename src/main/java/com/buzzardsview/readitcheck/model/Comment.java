@@ -4,6 +4,7 @@ import com.buzzardsview.readitcheck.model.dto.comment.CommentForListDto;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -12,6 +13,7 @@ public class Comment extends Content {
     @NotEmpty
     @Size(max = 3000)
     private String content;
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "submission_id")
     private Submission submission;

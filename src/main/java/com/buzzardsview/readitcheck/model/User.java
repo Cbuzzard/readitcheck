@@ -3,6 +3,7 @@ package com.buzzardsview.readitcheck.model;
 import com.buzzardsview.readitcheck.model.dto.user.UserSimpleDto;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +13,13 @@ public class User {
 
     @Id
     @Size(max = 22)
+    @NotEmpty
     private String googleId;
+    @NotEmpty
     private String name;
+    @NotEmpty
     private String username;
+    @NotEmpty
     private String picture;
     @OneToMany(mappedBy = "user")
     private List<Comment> comments = new ArrayList<>();

@@ -23,7 +23,7 @@ public class Submission extends Content {
     @Size(max = 255)
     private String title;
     @NotEmpty
-    @Size(max = 1000)
+    @Size(min = 1, max = 1000)
     @Pattern(regexp = "https?:\\/\\/(www\\.)[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,4}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)", message = "Link needs to be in https://www format")
     private String link;
     @OneToMany(mappedBy = "submission", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -42,22 +42,14 @@ public class Submission extends Content {
         this.title = title;
         this.link = link;
         this.question = question;
-        try {
-            this.linkPreview = extractLinkPreviewInfo(this.link);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        this.linkPreview = extractLinkPreviewInfo(this.link);
     }
 
     public Submission(User user, String title, String link) {
         super(user);
         this.title = title;
         this.link = link;
-        try {
-            this.linkPreview = extractLinkPreviewInfo(this.link);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        this.linkPreview = extractLinkPreviewInfo(this.link);
     }
 
     public String getTitle() {
@@ -127,11 +119,16 @@ public class Submission extends Content {
         );
     }
 
-    private String extractLinkPreviewInfo(String url) throws IOException {
+    public String extractLinkPreviewInfo(String url) {
         if (!url.startsWith("http")) {
             url = "https://" + url;
         }
-        Document document = Jsoup.connect(url).get();
+        Document document = null;
+        try {
+            document = Jsoup.connect(url).get();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return getMetaTagContent(document, "meta[property=og:image]");
     }
 

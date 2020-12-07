@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -19,6 +20,7 @@ public class Question {
     @NotEmpty(message = "must not be empty")
     @Size(max = 25)
     private String answer;
+    @NotNull
     @OneToOne
     @JoinColumn(name = "submission_id")
     private Submission submission;

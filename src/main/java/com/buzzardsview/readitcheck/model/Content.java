@@ -1,6 +1,7 @@
 package com.buzzardsview.readitcheck.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @MappedSuperclass
 public abstract class Content {
@@ -8,6 +9,7 @@ public abstract class Content {
     @Id
     @GeneratedValue
     private int id;
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "google_id")
     private User user;
