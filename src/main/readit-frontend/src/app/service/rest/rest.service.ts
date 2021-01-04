@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { SubmissionPost } from 'src/app/dto/submission-post';
 import { UrlService } from '../url/url.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../environments/environment'
 
 @Injectable({
   providedIn: 'root'
@@ -18,35 +19,35 @@ export class RestService {
 
   postSubmission(submissionPost) {
     console.log(submissionPost.title)
-    return this.http.post(`${this.url.backend}/rest/submission`, JSON.stringify(submissionPost), this.httpOptions);
+    return this.http.post(`${environment.backend}/rest/submission`, JSON.stringify(submissionPost), this.httpOptions);
   }
 
   getSubmission(id: number) {
-    return this.http.get(`${this.url.backend}/rest/submission/${id}`);
+    return this.http.get(`${environment.backend}/rest/submission/${id}`);
   }
 
   getSubmissions(page: number) {
-    return this.http.get(`${this.url.backend}/rest/submission?page=${page}`);
+    return this.http.get(`${environment.backend}/rest/submission?page=${page}`);
   }
 
   checkAnswer(id: number, answer: string) {
-    return this.http.post(`${this.url.backend}/rest/question/${id}`, answer, this.httpOptions);
+    return this.http.post(`${environment.backend}/rest/question/${id}`, answer, this.httpOptions);
   }
 
   postComment(submissionId, content) {
-    return this.http.post(`${this.url.backend}/rest/submission/${submissionId}/comment`, {content: content}, this.httpOptions);
+    return this.http.post(`${environment.backend}/rest/submission/${submissionId}/comment`, {content: content}, this.httpOptions);
   }
 
   getUser(id: number) {
-    return this.http.get(`${this.url.backend}/rest/user/${id}`);
+    return this.http.get(`${environment.backend}/rest/user/${id}`);
   }
 
   deleteComment(submissionId, commentId) {
-    return this.http.delete(`${this.url.backend}/rest/submission/${submissionId}/comment/${commentId}`);
+    return this.http.delete(`${environment.backend}/rest/submission/${submissionId}/comment/${commentId}`);
   }
 
   deleteSubmission(submissionId) {
-    return this.http.delete(`${this.url.backend}/rest/submission/${submissionId}`);
+    return this.http.delete(`${environment.backend}/rest/submission/${submissionId}`);
   }
 
 }

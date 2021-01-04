@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UrlService } from '../url/url.service';
 import { Subject } from 'rxjs';
+import { environment } from '../../../environments/environment'
 
 @Injectable({
   providedIn: 'root'
@@ -24,13 +25,13 @@ export class UserService {
 
   async authenticate(): Promise<Object> {
     const httpOptions = { headers: new HttpHeaders({}) };
-    return await this.http.get(`${this.url.backend}/rest/authenticate`, httpOptions).toPromise();
+    return await this.http.get(`${environment.backend}/rest/authenticate`, httpOptions).toPromise();
   }
 
   login() {
     return this.authInstance.signIn().then(user => {
       var xhr = new XMLHttpRequest();
-      xhr.open('POST', `${this.url.backend}/login`);
+      xhr.open('POST', `${environment.backend}/login`);
       xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
       xhr.setRequestHeader('X-ID-TOKEN', user.getAuthResponse().id_token);
       xhr.send();
