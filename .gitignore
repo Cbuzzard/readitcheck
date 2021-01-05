@@ -40,3 +40,4 @@ out/
 !.elasticbeanstalk/*.global.yml
 
 
+/src/main/resources/static/main.2974419845151b2801d6.js
